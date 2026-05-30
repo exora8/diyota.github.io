@@ -344,7 +344,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      user-select: none;
+      outline: none;
     }
+    .vplayer * { -webkit-tap-highlight-color: transparent; }
 
     .vplayer-stripe {
       position: absolute;
@@ -481,19 +486,17 @@
     .vmute-btn:hover { border-color: rgba(201,168,76,0.4); }
     .vmute-btn i { width: 13px; height: 13px; color: var(--gold); }
 
-    /* Pause overlay */
+    /* Pause overlay — shown only when paused mid-play */
     .vpause-overlay {
       position: absolute;
       inset: 0;
       z-index: 6;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       background: rgba(0,0,0,0.08);
-      opacity: 0;
-      transition: opacity 0.2s ease;
     }
-    .vcard:hover .vpause-overlay { opacity: 1; }
+    .vpause-overlay.show { display: flex; }
 
     .vpause-icon {
       width: 48px;
@@ -541,6 +544,28 @@
       letter-spacing: 0.3em;
       color: var(--gold);
       text-transform: uppercase;
+    }
+
+    /* PREVIEW watermark */
+    .vwatermark {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .vwatermark.show { display: flex; }
+    .vwatermark span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(28px, 6vw, 48px);
+      letter-spacing: 0.5em;
+      color: rgba(255,255,255,0.07);
+      text-transform: uppercase;
+      transform: rotate(-20deg);
+      white-space: nowrap;
+      user-select: none;
     }
 
     /* Card info */
@@ -841,6 +866,7 @@
             <div class="vspinner"></div>
             <span class="vbuffer-label">Buffering...</span>
           </div>
+          <div class="vwatermark" id="wm-1"><span>PREVIEW</span></div>
         </div>
         <div class="vinfo">
           <div class="vinfo-top">
@@ -903,6 +929,7 @@
             <div class="vspinner"></div>
             <span class="vbuffer-label">Buffering...</span>
           </div>
+          <div class="vwatermark" id="wm-2"><span>PREVIEW</span></div>
         </div>
         <div class="vinfo">
           <div class="vinfo-top">
@@ -965,6 +992,7 @@
             <div class="vspinner"></div>
             <span class="vbuffer-label">Buffering...</span>
           </div>
+          <div class="vwatermark" id="wm-3"><span>PREVIEW</span></div>
         </div>
         <div class="vinfo">
           <div class="vinfo-top">
@@ -1053,11 +1081,12 @@
 
     function resetPlayer(id) {
       document.getElementById('playbtn-' + id).style.display = 'flex';
-      document.getElementById('pause-' + id).style.display = 'none';
+      document.getElementById('pause-' + id).classList.remove('show');
       document.getElementById('mute-' + id).style.display = 'none';
       document.getElementById('prog-wrap-' + id).style.display = 'none';
       document.getElementById('thumb-' + id).style.display = 'block';
       document.getElementById('prog-fill-' + id).style.width = '0%';
+      document.getElementById('wm-' + id).classList.remove('show');
       if (videos[id]) {
         videos[id].style.display = 'none';
         delete videos[id];
@@ -1076,12 +1105,24 @@
       vid.loop = true;
       vid.playsInline = true;
       vid.muted = globalMuted;
-      vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;';
+      vid.setAttribute('playsinline', '');
+      vid.setAttribute('webkit-playsinline', '');
+      vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;outline:none;-webkit-tap-highlight-color:transparent;';
 
       vid.addEventListener('waiting', () => { buf.style.display = 'flex'; });
-      vid.addEventListener('playing', () => { buf.style.display = 'none'; });
+      vid.addEventListener('playing', () => {
+        buf.style.display = 'none';
+        document.getElementById('pause-' + id).classList.remove('show');
+        document.getElementById('wm-' + id).classList.add('show');
+      });
       vid.addEventListener('canplay', () => { buf.style.display = 'none'; });
       vid.addEventListener('loadeddata', () => { buf.style.display = 'none'; });
+      vid.addEventListener('pause', () => {
+        document.getElementById('pause-' + id).classList.add('show');
+      });
+      vid.addEventListener('play', () => {
+        document.getElementById('pause-' + id).classList.remove('show');
+      });
 
       vid.addEventListener('loadedmetadata', () => {
         document.getElementById('dur-' + id).textContent = vid.duration.toFixed(1) + 's';
@@ -1098,7 +1139,6 @@
 
       document.getElementById('thumb-' + id).style.display = 'none';
       document.getElementById('playbtn-' + id).style.display = 'none';
-      document.getElementById('pause-' + id).style.display = 'flex';
       document.getElementById('mute-' + id).style.display = 'flex';
       document.getElementById('prog-wrap-' + id).style.display = 'block';
     }
@@ -1106,7 +1146,8 @@
     [1,2,3].forEach(id => {
       const player = document.getElementById('player-' + id);
 
-      player.addEventListener('click', () => {
+      player.addEventListener('click', (e) => {
+        e.preventDefault();
         if (!videos[id]) {
           initVideo(id);
         } else {
@@ -1120,6 +1161,7 @@
 
       document.getElementById('mute-' + id).addEventListener('click', (e) => {
         e.stopPropagation();
+        e.preventDefault();
         globalMuted = !globalMuted;
         [1,2,3].forEach(vid => {
           if (videos[vid]) videos[vid].muted = globalMuted;
