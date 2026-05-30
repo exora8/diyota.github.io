@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diyota Portfolio</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            bebas: ['"Bebas Neue"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+    }
+    .hero-glow::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 200px;
+      background: radial-gradient(ellipse, rgba(180,140,60,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .video-stripe-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(255,255,255,0.01) 20px,
+        rgba(255,255,255,0.01) 21px
+      );
+      pointer-events: none;
+    }
+    /* Transition Effects */
+    .fade-transition {
+      transition: opacity 1.2s cubic-bezier(0.43, 0.13, 0.23, 0.96), transform 1.2s cubic-bezier(0.43, 0.13, 0.23, 0.96);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-[#f0f0f0] overflow-x-hidden selection:bg-[#c9a84c] selection:text-black">
+
+  <!-- ==================== CINEMATIC INTRO ==================== -->
+  <div id="intro-screen" class="fixed inset-0 z-50 bg-black flex flex-col justify-between p-6 md:p-12 items-center overflow-hidden fade-transition opacity-100 scale-100">
+    <!-- Fine Grid Background -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(180,140,60,0.05)_0%,transparent_80%)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(180,140,60,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(180,140,60,0.01)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+    
+    <!-- Top Bar -->
+    <div class="w-full max-w-6xl flex justify-between items-center text-xs tracking-[0.3em] font-mono text-zinc-600">
+      <div class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
+        <span>REC // 2026.05.30</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-2 text-[10px]">
+        <span>FPS: 60.00</span>
+        <span>•</span>
+        <span>SHUTTER: 1/120</span>
+      </div>
+    </div>
+
+    <!-- Center Titles -->
+    <div class="flex flex-col items-center justify-center text-center space-y-6 md:space-y-10 my-auto">
+      <div class="flex flex-col gap-1.5">
+        <p class="text-xs md:text-sm text-zinc-500 font-sans font-light tracking-[0.5em] uppercase animate-pulse">
+          Chasing Light & Cinematic Depth
+        </p>
+        <div class="w-10 h-[0.5px] bg-[#c9a84c] mx-auto my-2"></div>
+        <h1 class="font-bebas text-5xl md:text-8xl tracking-[8px] text-zinc-100">
+          DIYOTA<span class="text-[#c9a84c]">.</span>
+        </h1>
+      </div>
+
+      <!-- Qualities -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-[11px] font-light tracking-[0.3em] uppercase text-zinc-400">
+        <span>Cinematic Realism</span>
+        <span class="hidden sm:inline text-[#c9a84c]">•</span>
+        <span>AI Enhanced</span>
+        <span class="hidden sm:inline text-[#c9a84c]">•</span>
+        <span>Modern Editorial</span>
+      </div>
+
+      <!-- Enter Button -->
+      <div class="pt-6">
+        <button id="enter-btn" class="group relative cursor-pointer overflow-hidden border border-zinc-800 rounded px-8 py-3 bg-[rgba(20,20,20,0.4)] text-xs font-mono tracking-[0.4em] uppercase text-zinc-100/90 transition-all hover:border-[#c9a84c]/50 hover:shadow-[0_0_15px_rgba(201,168,76,0.15)] duration-500">
+          <span class="flex items-center gap-2">
+            Enter Experience 
+            <svg class="w-3.5 h-3.5 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer of Intro -->
+    <div class="w-full max-w-6xl flex flex-col md:flex-row justify-between items-center text-[10px] font-mono tracking-[0.2em] text-zinc-600 gap-2">
+      <div>PRODUCED FOR OUTSTANDING VISUALS</div>
+      <div>DIYOTA © 2026 / ALL ORIGINAL CUTS</div>
+    </div>
+  </div>
+
+
+  <!-- ==================== PORTFOLIO CONTENT ==================== -->
+  <div id="portfolio-screen" class="hidden opacity-0 scale-95 transition-all duration-1000 min-h-screen pb-16">
+    
+    <!-- Top Nav Overlay -->
+    <div class="absolute top-6 left-6 right-6 flex justify-between items-center z-10">
+      <span class="font-bebas text-2xl tracking-[2px] cursor-pointer" id="logo-back">
+        DIYOTA<span class="text-[#c9a84c]">.</span>
+      </span>
+      <button id="replay-btn" class="hidden md:flex items-center gap-1.5 text-[10px] font-mono tracking-[0.2em] text-zinc-500 hover:text-zinc-200 transition-colors uppercase cursor-pointer">
+        <svg class="w-3 h-3 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17"></path></svg> 
+        Replay Intro
+      </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-glow relative flex flex-col items-center justify-center px-6 pt-24 pb-16 md:pt-36 md:pb-24 text-center border-b border-zinc-900 overflow-hidden">
+      <p class="font-sans text-[11px] md:text-[13px] font-light tracking-[0.3em] uppercase text-zinc-500 mb-5">
+        Video Editor & Content Creator
+      </p>
+      
+      <h1 class="font-bebas text-[56px] sm:text-7xl md:text-9xl tracking-[6px] text-[#f0f0f0] leading-[1.1] mb-2 font-black">
+        DIY<span class="text-[#c9a84c]">OTA</span>
+      </h1>
+      
+      <p class="text-[12px] md:text-sm font-light text-zinc-500 tracking-[0.2em] uppercase mb-10">
+        Cinematic · AI-Enhanced · Editorial
+      </p>
+
+      <div class="w-10 h-[1.5px] bg-[#c9a84c] mb-8"></div>
+
+      <div class="max-w-[500px] text-sm md:text-base leading-relaxed text-zinc-400 font-light px-4">
+        Welcome to my portfolio.<br><br>
+        Here are <strong class="text-zinc-200 font-medium">3 sample videos</strong> crafted based on your company's requirements — product ads, cinematic storytelling, and lifestyle content. All footage is <strong class="text-zinc-200 font-medium">AI-enhanced</strong>, edited manually with attention to every cut, transition, and color grade.
+      </div>
+    </section>
+
+    <!-- Selected Work Grid -->
+    <section class="max-w-[900px] mx-auto px-6 py-16 md:py-24">
+      <p class="text-[11px] tracking-[0.3em] text-[#c9a84c] uppercase font-light mb-3">Selected Work</p>
+      <h2 class="font-bebas text-3xl md:text-5xl tracking-[3px] text-[#f0f0f0] mb-2 uppercase">Top 3 Samples</h2>
+      <p class="text-xs md:text-sm text-zinc-500 mb-16 font-light">Each video demonstrates a different content style relevant to your needs</p>
+
+      <div class="flex flex-col gap-16 md:gap-24">
+
+        <!-- WORK CARD 1 -->
+        <div class="border border-zinc-900 rounded bg-[#0f0f0f] overflow-hidden group hover:border-zinc-800 transition-all duration-300">
+          <div class="video-stripe-bg relative w-full aspect-video bg-[#141414] overflow-hidden flex flex-col justify-center items-center cursor-pointer select-none video-container" data-id="1">
+            <!-- Poster Frame -->
+            <img class="poster-img absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-100 filter brightness-[0.25] grayscale-[30%] group-hover:scale-105" src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80" alt="Fortuner">
+            
+            <!-- DOM Video Element -->
+            <video class="main-video hidden absolute inset-0 w-full h-full object-cover z-0 opacity-0 transition-opacity duration-500" loop playsinline preload="auto" src="https://github.com/exora8/diyota.github.io/raw/refs/heads/main/Garrett-Fortuner.mp4"></video>
+
+            <!-- Sound Toggle (Speaker icon) -->
+            <button class="sound-btn hidden absolute top-4 right-4 z-20 flex bg-black/60 backdrop-blur border border-white/10 rounded-full p-2 text-zinc-300 hover:text-amber-400 transition-colors">
+              <!-- Muted Initially structure, changed on play -->
+              <svg class="speaker-svg w-4 h-4 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M12 18.75V5.25L7.75 9.5H4.5v5h3.25L12 18.75z"></path></svg>
+            </button>
+
+            <!-- Gradient Scanline overlay -->
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.6)_100%)]"></div>
+
+            <!-- Loading Spinner -->
+            <div class="buffering-overlay hidden absolute inset-0 bg-[#0a0a0ae6] backdrop-blur-xs flex flex-col justify-center items-center z-20 pointer-events-none">
+              <svg class="w-8 h-8 text-[#c9a84c] animate-spin mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17"></path></svg>
+              <span class="text-[10px] font-mono tracking-[0.2em] text-[#c9a84c] uppercase">Buffering...</span>
+            </div>
+
+            <!-- Standby Play Trigger Button -->
+            <div class="play-trigger flex flex-col items-center justify-center z-10 transition-transform group-hover:scale-105 duration-300">
+              <div class="w-16 h-16 border border-[#c9a84c]/20 bg-black/60 rounded-full flex items-center justify-center text-zinc-300 group-hover:bg-[#c9a84c]/10">
+                <svg class="w-6 h-6 ml-1 text-zinc-300" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+              </div>
+              <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-400 font-medium uppercase mt-4">Click to play</span>
+            </div>
+
+            <!-- Hover Pause overlay -->
+            <div class="pause-overlay hidden absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <div class="w-14 h-14 border border-white/15 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                <span class="w-4 h-5 flex justify-between">
+                  <span class="w-1 bg-zinc-200 rounded-sm"></span>
+                  <span class="w-1 bg-zinc-200 rounded-sm"></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Playing Slider / Timeline Progress bar (only shown when playing) -->
+            <div class="timeline-container hidden absolute bottom-0 left-0 right-0 p-4 z-20 space-y-1.5 bg-gradient-to-t from-black/80 to-transparent">
+              <div class="flex justify-between items-center text-[10px] font-mono text-zinc-300 drop-shadow">
+                <span class="curr-time">0.0s</span>
+                <span class="dur-time">0.0s</span>
+              </div>
+              <div class="w-full bg-zinc-950/80 h-1 rounded-full overflow-hidden border border-white/5">
+                <div class="progress-bar h-full bg-[#c9a84c] rounded-full shadow-[0_0_8px_#c9a84c]" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+              <div>
+                <span class="text-[10px] tracking-widest text-[#c9a84c] font-light uppercase block mb-1">Sample 01 // Product Ad</span>
+                <h3 class="font-bebas text-2xl md:text-3xl tracking-[1.5px] text-[#f0f0f0] group-hover:text-[#c9a84c] transition-colors duration-300">Fortuner × Turbo Garrett GTX</h3>
+              </div>
+              <span class="text-[10px] font-mono text-zinc-600 bg-zinc-950 px-2 py-1 border border-zinc-900 rounded self-start">
+                Speed ramped, heavy bass sync, 4K upscale, dynamic shutter effect.
+              </span>
+            </div>
+            <p class="text-zinc-400 text-sm leading-relaxed font-light mb-6">
+              Automotive product marketing video featuring the Toyota Fortuner with Garrett GTX3582R turbo modification. Shot in the style of viral TikTok automotive content. Real footage edited and color graded manually in CapCut, with AI used for visual enhancement.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Product Ad</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Automotive</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">TikTok Style</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Color Grading</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORK CARD 2 -->
+        <div class="border border-zinc-900 rounded bg-[#0f0f0f] overflow-hidden group hover:border-zinc-800 transition-all duration-300">
+          <div class="video-stripe-bg relative w-full aspect-video bg-[#141414] overflow-hidden flex flex-col justify-center items-center cursor-pointer select-none video-container" data-id="2">
+            <!-- Poster Frame -->
+            <img class="poster-img absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-100 filter brightness-[0.25] grayscale-[30%] group-hover:scale-105" src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1200&q=80" alt="R1M">
+            
+            <!-- DOM Video Element -->
+            <video class="main-video hidden absolute inset-0 w-full h-full object-cover z-0 opacity-0 transition-opacity duration-500" loop playsinline preload="auto" src="https://github.com/exora8/diyota.github.io/raw/refs/heads/main/kahf-R1M.mp4"></video>
+
+            <!-- Sound Toggle (Speaker icon) -->
+            <button class="sound-btn hidden absolute top-4 right-4 z-20 flex bg-black/60 backdrop-blur border border-white/10 rounded-full p-2 text-zinc-300 hover:text-amber-400 transition-colors">
+              <svg class="speaker-svg w-4 h-4 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M12 18.75V5.25L7.75 9.5H4.5v5h3.25L12 18.75z"></path></svg>
+            </button>
+
+            <!-- Gradient Scanline overlay -->
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.6)_100%)]"></div>
+
+            <!-- Loading Spinner -->
+            <div class="buffering-overlay hidden absolute inset-0 bg-[#0a0a0ae6] backdrop-blur-xs flex flex-col justify-center items-center z-20 pointer-events-none">
+              <svg class="w-8 h-8 text-[#c9a84c] animate-spin mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17"></path></svg>
+              <span class="text-[10px] font-mono tracking-[0.2em] text-[#c9a84c] uppercase">Buffering...</span>
+            </div>
+
+            <!-- Standby Play Trigger Button -->
+            <div class="play-trigger flex flex-col items-center justify-center z-10 transition-transform group-hover:scale-105 duration-300">
+              <div class="w-16 h-16 border border-[#c9a84c]/20 bg-black/60 rounded-full flex items-center justify-center text-zinc-300 group-hover:bg-[#c9a84c]/10">
+                <svg class="w-6 h-6 ml-1 text-zinc-300" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+              </div>
+              <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-400 font-medium uppercase mt-4">Click to play</span>
+            </div>
+
+            <!-- Hover Pause overlay -->
+            <div class="pause-overlay hidden absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <div class="w-14 h-14 border border-white/15 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                <span class="w-4 h-5 flex justify-between">
+                  <span class="w-1 bg-zinc-200 rounded-sm"></span>
+                  <span class="w-1 bg-zinc-200 rounded-sm"></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Playing Slider / Timeline Progress bar (only shown when playing) -->
+            <div class="timeline-container hidden absolute bottom-0 left-0 right-0 p-4 z-20 space-y-1.5 bg-gradient-to-t from-black/80 to-transparent">
+              <div class="flex justify-between items-center text-[10px] font-mono text-zinc-300 drop-shadow">
+                <span class="curr-time">0.0s</span>
+                <span class="dur-time">0.0s</span>
+              </div>
+              <div class="w-full bg-zinc-950/80 h-1 rounded-full overflow-hidden border border-white/5">
+                <div class="progress-bar h-full bg-[#c9a84c] rounded-full shadow-[0_0_8px_#c9a84c]" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+              <div>
+                <span class="text-[10px] tracking-widest text-[#c9a84c] font-light uppercase block mb-1">Sample 02 // Lifestyle Ad</span>
+                <h3 class="font-bebas text-2xl md:text-3xl tracking-[1.5px] text-[#f0f0f0] group-hover:text-[#c9a84c] transition-colors duration-300">Kahf Silverwood × Yamaha R1M</h3>
+              </div>
+              <span class="text-[10px] font-mono text-zinc-600 bg-zinc-950 px-2 py-1 border border-zinc-900 rounded self-start">
+                Gold & Charcoal grading, ambient wind sound design, split screen, depth blur.
+              </span>
+            </div>
+            <p class="text-zinc-400 text-sm leading-relaxed font-light mb-6">
+              Lifestyle product ad for Kahf Silverwood fragrance, featuring a custom Yamaha R1M in gold/black livery. Multi-angle cinematic shots — FPV showroom walkthrough, parfum reveal. AI-generated footage, manually edited.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Lifestyle Ad</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Fragrance</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Cinematic</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Night Shoot</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORK CARD 3 -->
+        <div class="border border-zinc-900 rounded bg-[#0f0f0f] overflow-hidden group hover:border-zinc-800 transition-all duration-300">
+          <div class="video-stripe-bg relative w-full aspect-video bg-[#141414] overflow-hidden flex flex-col justify-center items-center cursor-pointer select-none video-container" data-id="3">
+            <!-- Poster Frame -->
+            <img class="poster-img absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-100 filter brightness-[0.25] grayscale-[30%] group-hover:scale-105" src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80" alt="Specs">
+            
+            <!-- DOM Video Element -->
+            <video class="main-video hidden absolute inset-0 w-full h-full object-cover z-0 opacity-0 transition-opacity duration-500" loop playsinline preload="auto" src="https://github.com/exora8/diyota.github.io/raw/refs/heads/main/specs-12.mp4"></video>
+
+            <!-- Sound Toggle (Speaker icon) -->
+            <button class="sound-btn hidden absolute top-4 right-4 z-20 flex bg-black/60 backdrop-blur border border-white/10 rounded-full p-2 text-zinc-300 hover:text-amber-400 transition-colors">
+              <svg class="speaker-svg w-4 h-4 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M12 18.75V5.25L7.75 9.5H4.5v5h3.25L12 18.75z"></path></svg>
+            </button>
+
+            <!-- Gradient Scanline overlay -->
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.6)_100%)]"></div>
+
+            <!-- Loading Spinner -->
+            <div class="buffering-overlay hidden absolute inset-0 bg-[#0a0a0ae6] backdrop-blur-xs flex flex-col justify-center items-center z-20 pointer-events-none">
+              <svg class="w-8 h-8 text-[#c9a84c] animate-spin mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17"></path></svg>
+              <span class="text-[10px] font-mono tracking-[0.2em] text-[#c9a84c] uppercase">Buffering...</span>
+            </div>
+
+            <!-- Standby Play Trigger Button -->
+            <div class="play-trigger flex flex-col items-center justify-center z-10 transition-transform group-hover:scale-105 duration-300">
+              <div class="w-16 h-16 border border-[#c9a84c]/20 bg-black/60 rounded-full flex items-center justify-center text-zinc-300 group-hover:bg-[#c9a84c]/10">
+                <svg class="w-6 h-6 ml-1 text-zinc-300" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+              </div>
+              <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-400 font-medium uppercase mt-4">Click to play</span>
+            </div>
+
+            <!-- Hover Pause overlay -->
+            <div class="pause-overlay hidden absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <div class="w-14 h-14 border border-white/15 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                <span class="w-4 h-5 flex justify-between">
+                  <span class="w-1 bg-zinc-200 rounded-sm"></span>
+                  <span class="w-1 bg-zinc-200 rounded-sm"></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Playing Slider / Timeline Progress bar (only shown when playing) -->
+            <div class="timeline-container hidden absolute bottom-0 left-0 right-0 p-4 z-20 space-y-1.5 bg-gradient-to-t from-black/80 to-transparent">
+              <div class="flex justify-between items-center text-[10px] font-mono text-zinc-300 drop-shadow">
+                <span class="curr-time">0.0s</span>
+                <span class="dur-time">0.0s</span>
+              </div>
+              <div class="w-full bg-zinc-950/80 h-1 rounded-full overflow-hidden border border-white/5">
+                <div class="progress-bar h-full bg-[#c9a84c] rounded-full shadow-[0_0_8px_#c9a84c]" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+              <div>
+                <span class="text-[10px] tracking-widest text-[#c9a84c] font-light uppercase block mb-1">Sample 03 // Consumer Product</span>
+                <h3 class="font-bebas text-2xl md:text-3xl tracking-[1.5px] text-[#f0f0f0] group-hover:text-[#c9a84c] transition-colors duration-300">Specs Football × Novarspeed</h3>
+              </div>
+              <span class="text-[10px] font-mono text-zinc-600 bg-zinc-950 px-2 py-1 border border-zinc-900 rounded self-start">
+                Dynamic tracking shots, motion graphics overlays, water splash enhancement.
+              </span>
+            </div>
+            <p class="text-zinc-400 text-sm leading-relaxed font-light mb-6">
+              Product ad for Specs Indonesia — featuring the football cleat and Novarspeed running shoe. Slow motion cinematic shots, action sequences, and clean product presentation. Demonstrates versatility across consumer product categories beyond automotive.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Consumer Product</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Sports</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Slow Motion</span>
+              <span class="text-[10px] tracking-widest uppercase text-zinc-500 border border-zinc-900 bg-zinc-950 px-3 py-1.5 rounded-sm">Brand Ad</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section class="border-t border-zinc-900/40 bg-gradient-to-b from-[#0a0a0a] to-[#080808] py-16 md:py-24">
+      <div class="max-w-[900px] mx-auto px-6">
+        <p class="text-[11px] tracking-[0.3em] text-[#c9a84c] uppercase font-light mb-3">Capabilities & Tech</p>
+        <h2 class="font-bebas text-3xl md:text-5xl tracking-[3px] text-[#f0f0f0] mb-2 uppercase">What I Bring</h2>
+        <p class="text-xs md:text-sm text-zinc-500 mb-12 font-light">Advanced editorial workflow & integrated content assets</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="bg-[#0f0f0f] border border-zinc-900 rounded p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c9a84c]/20">
+            <h4 class="text-zinc-200 font-sans text-sm font-medium mb-2 tracking-wide flex items-center gap-2">
+              <span class="text-[#c9a84c]">✦</span> CapCut Integration
+            </h4>
+            <p class="text-zinc-500 text-xs leading-relaxed font-light">Primary high-fidelity editing suite for dynamic timing, overlays & effects.</p>
+          </div>
+          <div class="bg-[#0f0f0f] border border-zinc-900 rounded p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c9a84c]/20">
+            <h4 class="text-zinc-200 font-sans text-sm font-medium mb-2 tracking-wide flex items-center gap-2">
+              <span class="text-[#c9a84c]">✦</span> AI Video Generation
+            </h4>
+            <p class="text-zinc-500 text-xs leading-relaxed font-light">Expert integration of Kling AI and Dola for prompt-to-video cinemagraphics.</p>
+          </div>
+          <div class="bg-[#0f0f0f] border border-zinc-900 rounded p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c9a84c]/20">
+            <h4 class="text-zinc-200 font-sans text-sm font-medium mb-2 tracking-wide flex items-center gap-2">
+              <span class="text-[#c9a84c]">✦</span> Manual Color Tuning
+            </h4>
+            <p class="text-zinc-500 text-xs leading-relaxed font-light">Direct control mapping of color grading, customized golden & twilight palettes.</p>
+          </div>
+          <div class="bg-[#0f0f0f] border border-zinc-900 rounded p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c9a84c]/20">
+            <h4 class="text-zinc-200 font-sans text-sm font-medium mb-2 tracking-wide flex items-center gap-2">
+              <span class="text-[#c9a84c]">✦</span> AI Photo Scale-Up
+            </h4>
+            <p class="text-zinc-500 text-xs leading-relaxed font-light">Super-resolution and sharpening with Midjourney and advanced generative filters.</p>
+          </div>
+          <div class="bg-[#0f0f0f] border border-zinc-900 rounded p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c9a84c]/20">
+            <h4 class="text-zinc-200 font-sans text-sm font-medium mb-2 tracking-wide flex items-center gap-2">
+              <span class="text-[#c9a84c]">✦</span> Viral Hook Planning
+            </h4>
+            <p class="text-zinc-500 text-xs leading-relaxed font-light">Engineered retention spikes, micro-timing clips, and reels transition structures.</p>
+          </div>
+          <div class="bg-[#0f0f0f] border border-zinc-900 rounded p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#c9a84c]/20">
+            <h4 class="text-zinc-200 font-sans text-sm font-medium mb-2 tracking-wide flex items-center gap-2">
+              <span class="text-[#c9a84c]">✦</span> Rapid Turnaround
+            </h4>
+            <p class="text-zinc-500 text-xs leading-relaxed font-light">Disciplined scheduling layout ensuring exact delivery matching timeline constraints.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Email Contact Details -->
+    <section class="max-w-[900px] mx-auto px-6 py-12">
+      <div class="border border-zinc-900 bg-zinc-950/40 rounded p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="font-bebas text-2xl tracking-wider text-zinc-200">Interested in working together?</h3>
+          <p class="text-xs text-zinc-500 font-light mt-1">Get custom cinematic clips and AI enhanced content for your brand.</p>
+        </div>
+        <a href="mailto:diyotapamicro@gmail.com?subject=Inquiry%20from%20Video%20Portfolio" class="px-6 py-2.5 bg-gradient-to-r from-zinc-900 to-zinc-950 border border-zinc-800 rounded font-mono text-xs text-zinc-300 tracking-wider hover:border-[#c9a84c]/40 hover:text-[#c9a84c] transition-all duration-300">
+          diyotapamicro@gmail.com
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-zinc-900/60 mt-12 py-12 text-center text-zinc-700">
+      <div class="w-[1px] h-10 bg-[#c9a84c] mx-auto mb-6 opacity-30"></div>
+      <p class="text-[10px] font-mono tracking-[0.25em] uppercase text-zinc-500">
+        Diyota · Video Editor · 2026
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- ==================== VANILLA JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // State Tracking
+    let volumeOn = true;
+    let currentlyPlayingId = null;
+
+    // Elements
+    const introScreen = document.getElementById('intro-screen');
+    const portfolioScreen = document.getElementById('portfolio-screen');
+    const enterBtn = document.getElementById('enter-btn');
+    const replayBtn = document.getElementById('replay-btn');
+    const logoBack = document.getElementById('logo-back');
+    const videoContainers = document.querySelectorAll('.video-container');
+
+    // Transitions: Page Entry
+    function enterExperience() {
+      // Fade out intro
+      introScreen.classList.replace('opacity-100', 'opacity-0');
+      introScreen.classList.replace('scale-100', 'scale-105');
+      
+      setTimeout(() => {
+        introScreen.classList.add('hidden');
+        portfolioScreen.classList.remove('hidden');
+        
+        // Force Reflow to trigger transition
+        portfolioScreen.offsetHeight;
+        
+        portfolioScreen.classList.replace('opacity-0', 'opacity-100');
+        portfolioScreen.classList.replace('scale-95', 'scale-100');
+      }, 1200);
+    }
+
+    // Transitions: Replay Intro
+    function replayIntro() {
+      pauseAllVideos();
+      
+      // Fade out portfolio
+      portfolioScreen.classList.replace('opacity-100', 'opacity-0');
+      portfolioScreen.classList.replace('scale-100', 'scale-95');
+      
+      setTimeout(() => {
+        portfolioScreen.classList.add('hidden');
+        introScreen.classList.remove('hidden');
+        
+        // Force scale and opacity reset
+        introScreen.offsetHeight;
+        
+        introScreen.classList.replace('opacity-0', 'opacity-100');
+        introScreen.classList.replace('scale-105', 'scale-100');
+      }, 1000);
+    }
+
+    enterBtn.addEventListener('click', enterExperience);
+    replayBtn.addEventListener('click', replayIntro);
+    logoBack.addEventListener('click', replayIntro);
+
+    // Pause all other playing videos helper
+    function pauseAllVideos(exceptId = null) {
+      videoContainers.forEach(container => {
+        const id = container.getAttribute('data-id');
+        if (id === exceptId) return;
+
+        const video = container.querySelector('.main-video');
+        const poster = container.querySelector('.poster-img');
+        const soundBtn = container.querySelector('.sound-btn');
+        const playBtn = container.querySelector('.play-trigger');
+        const timeline = container.querySelector('.timeline-container');
+        const pauseOverlay = container.querySelector('.pause-overlay');
+        const buffering = container.querySelector('.buffering-overlay');
+
+        if (!video.paused) {
+          video.pause();
+        }
+
+        // Reset state
+        video.classList.add('hidden');
+        video.classList.replace('opacity-90', 'opacity-0');
+        poster.classList.remove('hidden');
+        soundBtn.classList.add('hidden');
+        playBtn.classList.remove('hidden');
+        timeline.classList.add('hidden');
+        pauseOverlay.classList.add('hidden');
+        buffering.classList.add('hidden');
+      });
+
+      if (!exceptId) {
+        currentlyPlayingId = null;
+      }
+    }
+
+    // Setup Video Listeners
+    videoContainers.forEach(container => {
+      const id = container.getAttribute('data-id');
+      const video = container.querySelector('.main-video');
+      const poster = container.querySelector('.poster-img');
+      const soundBtn = container.querySelector('.sound-btn');
+      const playBtn = container.querySelector('.play-trigger');
+      const timeline = container.querySelector('.timeline-container');
+      const pauseOverlay = container.querySelector('.pause-overlay');
+      const buffering = container.querySelector('.buffering-overlay');
+      const progressBar = container.querySelector('.progress-bar');
+      const currTimeSpan = container.querySelector('.curr-time');
+      const durTimeSpan = container.querySelector('.dur-time');
+
+      // Click on container to toggle Play/Pause
+      container.addEventListener('click', (e) => {
+        // Prevent trigger if clicking on sound toggle button specifically
+        if (e.target.closest('.sound-btn')) return;
+
+        const isPlaying = !video.paused;
+
+        if (isPlaying) {
+          // Pause this video immediately
+          video.pause();
+          
+          // Show poster frame, play trigger, and reset overlay classes
+          video.classList.add('hidden');
+          video.classList.replace('opacity-90', 'opacity-0');
+          poster.classList.remove('hidden');
+          soundBtn.classList.add('hidden');
+          playBtn.classList.remove('hidden');
+          timeline.classList.add('hidden');
+          pauseOverlay.classList.add('hidden');
+          buffering.classList.add('hidden');
+
+          if (currentlyPlayingId === id) {
+            currentlyPlayingId = null;
+          }
+        } else {
+          // Pause any other video playing first
+          pauseAllVideos(id);
+
+          // Force state update
+          currentlyPlayingId = id;
+          video.muted = !volumeOn;
+
+          // Transition elements to active state
+          poster.classList.add('hidden');
+          video.classList.remove('hidden');
+          
+          // Trigger Play with auto buffering safety
+          video.play().then(() => {
+            video.classList.replace('opacity-0', 'opacity-90');
+            soundBtn.classList.remove('hidden');
+            playBtn.classList.add('hidden');
+            timeline.classList.remove('hidden');
+            pauseOverlay.classList.remove('hidden');
+          }).catch(err => {
+            console.log('Autoplay blocked or load failed:', err);
+          });
+        }
+      });
+
+      // HTML Video Event Handlers for UI Updates
+      video.addEventListener('timeupdate', () => {
+        if (video.duration) {
+          const pct = (video.currentTime / video.duration) * 100;
+          progressBar.style.width = `${pct}%`;
+          currTimeSpan.textContent = `${video.currentTime.toFixed(1)}s`;
+        }
+      });
+
+      video.addEventListener('loadedmetadata', () => {
+        if (video.duration) {
+          durTimeSpan.textContent = `${video.duration.toFixed(1)}s`;
+        }
+      });
+
+      // Sound Toggle Handler
+      soundBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Toggle state
+        volumeOn = !volumeOn;
+        
+        // Apply state globally to all videos
+        const activeVideos = document.querySelectorAll('.main-video');
+        const activeSvgs = document.querySelectorAll('.speaker-svg');
+        
+        activeVideos.forEach(v => {
+          v.muted = !volumeOn;
+        });
+
+        activeSvgs.forEach(svg => {
+          if (volumeOn) {
+            // Speaker ON Icon Path
+            svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M12 18.75V5.25L7.75 9.5H4.5v5h3.25L12 18.75z"></path>';
+            svg.classList.replace('text-zinc-400', 'text-[#c9a84c]');
+            svg.classList.add('animate-pulse');
+          } else {
+            // Speaker OFF / Mute Icon Path
+            svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>';
+            svg.classList.replace('text-[#c9a84c]', 'text-zinc-400');
+            svg.classList.remove('animate-pulse');
+          }
+        });
+      });
+
+      // Loading Events (Buffering state protection)
+      video.addEventListener('waiting', () => {
+        buffering.classList.remove('hidden');
+      });
+      video.addEventListener('playing', () => {
+        buffering.classList.add('hidden');
+      });
+      video.addEventListener('canplay', () => {
+        buffering.classList.add('hidden');
+      });
+      video.addEventListener('loadstart', () => {
+        buffering.classList.remove('hidden');
+      });
+      video.addEventListener('loadeddata', () => {
+        buffering.classList.add('hidden');
+      });
+    });
+  </script>
+
+</body>
+</html>
