@@ -3,608 +3,1132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diyota - Cinematic Video Portfolio</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Tailwind Configuration to support DM Sans, Bebas Neue, and custom colors -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"DM Sans"', 'sans-serif'],
-            bebas: ['"Bebas Neue"', 'sans-serif'],
-          },
-          colors: {
-            gold: {
-              custom: '#c9a84c',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Google Fonts import -->
+  <title>Diyota — Video Editor Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-  <!-- Lucide Icons Library -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Alpine.js CDN for interactive state management -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Custom styles from your React components to preserve exact aesthetic design -->
   <style>
-    .portfolio-bg {
-      background: #0a0a0a;
-      color: #f0f0f0;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-dim: rgba(201,168,76,0.12);
+      --bg: #0a0a0a;
+      --surface: #0f0f0f;
+      --border: #1c1c1c;
+      --border-mid: #252525;
+      --text-primary: #f0f0f0;
+      --text-secondary: #888;
+      --text-muted: #444;
     }
-    .hero-glow::before {
-      content: '';
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── SPLASH ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #splash.leaving { opacity: 0; transform: scale(1.04); pointer-events: none; }
+
+    .splash-grid {
       position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 400px;
-      height: 200px;
-      background: radial-gradient(ellipse, rgba(180,140,60,0.12) 0%, transparent 70%);
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
       pointer-events: none;
     }
-    .video-stripe-bg::before {
-      content: '';
+
+    .splash-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .splash-rec {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: #555;
+    }
+
+    .dot-ping {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #f59e0b;
+      animation: ping 1.5s ease infinite;
+    }
+
+    @keyframes ping {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    .splash-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .splash-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 14vw, 110px);
+      letter-spacing: 8px;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .splash-name span { color: var(--gold); }
+
+    .splash-divider {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .splash-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border: 1px solid #2a2a2a;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.02);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #ccc;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    .splash-btn:hover {
+      border-color: rgba(201,168,76,0.4);
+      color: #fff;
+      background: rgba(201,168,76,0.05);
+      box-shadow: 0 0 28px rgba(201,168,76,0.1);
+    }
+    .splash-btn i { color: var(--gold); width: 16px; height: 16px; }
+
+    .splash-meta {
+      position: absolute;
+      bottom: 28px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 32px;
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: #333;
+    }
+
+    /* ── MAIN ── */
+    #main {
+      min-height: 100vh;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    #main.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 4px;
+      color: var(--text-primary);
+    }
+    .nav-brand span { color: var(--gold); }
+
+    .nav-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border-mid);
+      margin: 0 16px;
+    }
+
+    .nav-label {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .nav-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(201,168,76,0.04);
+      padding: 6px 12px;
+      border-radius: 100px;
+    }
+
+    .dot-online {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 72px 40px 64px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 7px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero-pill i { width: 12px; height: 12px; }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 8vw, 68px);
+      letter-spacing: 4px;
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .hero-divider {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 24px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      max-width: 520px;
+    }
+    .hero-desc strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 32px;
+    }
+
+    .section-eyebrow {
+      font-family: monospace;
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      letter-spacing: 3px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── VIDEO GRID ── */
+    .video-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* ── VIDEO CARD ── */
+    .vcard {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+    .vcard:hover { border-color: var(--border-mid); }
+
+    .vplayer {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #111;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vplayer-stripe {
       position: absolute;
       inset: 0;
       background: repeating-linear-gradient(
         45deg,
         transparent,
         transparent 20px,
-        rgba(255,255,255,0.01) 20px,
-        rgba(255,255,255,0.01) 21px
+        rgba(255,255,255,0.008) 20px,
+        rgba(255,255,255,0.008) 21px
       );
+      z-index: 1;
       pointer-events: none;
-      z-index: 10;
+    }
+
+    .vplayer img,
+    .vplayer video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vplayer img {
+      filter: brightness(0.22) grayscale(0.3);
+      transition: transform 0.8s ease, filter 0.4s ease;
+      z-index: 0;
+    }
+    .vcard:hover .vplayer img { transform: scale(1.04); filter: brightness(0.28) grayscale(0.2); }
+
+    .vplayer video { z-index: 2; }
+
+    .vplayer-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.65) 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .vplay-btn-wrap {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.3s ease;
+    }
+    .vcard:hover .vplay-btn-wrap { transform: scale(1.04); }
+
+    .vplay-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .vplay-btn:hover,
+    .vcard:hover .vplay-btn {
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.08);
+      box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    }
+    .vplay-btn i { width: 20px; height: 20px; color: #ccc; margin-left: 3px; }
+
+    .vplay-label {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    /* Progress bar */
+    .vprogress-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 6;
+      padding: 12px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    }
+
+    .vprogress-times {
+      display: flex;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 9px;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+
+    .vprogress-bar {
+      width: 100%;
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .vprogress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 6px rgba(201,168,76,0.5);
+    }
+
+    /* Mute button */
+    .vmute-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 7;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .vmute-btn:hover { border-color: rgba(201,168,76,0.4); }
+    .vmute-btn i { width: 13px; height: 13px; color: var(--gold); }
+
+    /* Pause overlay */
+    .vpause-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.08);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .vcard:hover .vpause-overlay { opacity: 1; }
+
+    .vpause-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .vpause-bar {
+      width: 3px;
+      height: 14px;
+      background: #e0e0e0;
+      border-radius: 2px;
+    }
+
+    /* Buffering */
+    .vbuffer {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      background: rgba(10,10,10,0.88);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .vspinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #1e1e1e;
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .vbuffer-label {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* Card info */
+    .vinfo {
+      padding: 20px 20px 22px;
+    }
+
+    .vinfo-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .vinfo-num {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .vinfo-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 1.5px;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .vinfo-badge {
+      font-family: monospace;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: #555;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      padding: 4px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .vinfo-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .vinfo-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .vtag {
+      font-family: monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #444;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    .vspec {
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .vspec-label {
+      font-family: monospace;
+      font-size: 8px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .vspec-text {
+      font-family: monospace;
+      font-size: 10px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* ── SKILLS ── */
+    .skills-section {
+      border-top: 1px solid var(--border);
+      padding: 48px 40px 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 14px 16px;
+    }
+
+    .skill-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .skill-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .footer-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: ping 2s ease infinite;
+    }
+
+    .footer-right {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #2a2a2a;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .video-grid { grid-template-columns: 1fr; padding: 0 24px 60px; }
+      nav { padding: 16px 24px; }
+      .hero { padding: 52px 24px 48px; }
+      .section-header { padding: 0 24px 24px; }
+      .skills-section { padding: 40px 24px 52px; }
+      footer { padding: 20px 24px; }
+      .splash-meta { padding: 0 20px; }
+    }
+
+    @media (max-width: 1200px) and (min-width: 901px) {
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-divider, .nav-label { display: none; }
+      .hero-title { font-size: 32px; }
+      .splash-name { font-size: 52px; letter-spacing: 5px; }
     }
   </style>
 </head>
-<body class="portfolio-bg font-sans antialiased overflow-x-hidden selection:bg-gold-custom selection:text-black">
+<body>
 
-  <!-- Global Alpine Application Container -->
-  <div x-data="{
-    hasEntered: false,
-    volumeOn: true,
-    playbackStates: { 1: false, 2: false, 3: false },
-    playProgress: { 1: 0, 2: 0, 3: 0 },
-    videoLoadingStates: { 1: false, 2: false, 3: false },
-    videoDurations: { 1: 0, 2: 0, 3: 0 },
-    videoCurrentTimes: { 1: 0, 2: 0, 3: 0 },
-    
-    togglePlay(id) {
-      const isCurrentlyPlaying = this.playbackStates[id];
-      const videoIds = [1, 2, 3];
-      
-      videoIds.forEach(vidId => {
-        const videoEl = document.getElementById('video-' + vidId);
-        if (videoEl) {
-          if (vidId === id && !isCurrentlyPlaying) {
-            videoEl.play();
-            this.playbackStates[vidId] = true;
-          } else {
-            videoEl.pause();
-            this.playbackStates[vidId] = false;
-          }
-        }
-      });
-    },
+  <!-- SPLASH SCREEN -->
+  <div id="splash">
+    <div class="splash-grid"></div>
+    <div class="splash-glow"></div>
 
-    toggleMute() {
-      this.volumeOn = !this.volumeOn;
-      [1, 2, 3].forEach(vidId => {
-        const videoEl = document.getElementById('video-' + vidId);
-        if (videoEl) {
-          videoEl.muted = !this.volumeOn;
-        }
-      });
-    }
-  }" x-init="lucide.createIcons();">
+    <div class="splash-rec">
+      <div class="dot-ping"></div>
+      <span>REC // PRESENT RECORD</span>
+    </div>
 
-    <!-- =================  ENTER EXPERIENCE SCREEN  ================= -->
-    <div x-show="!hasEntered" 
-         x-transition:leave="transition ease-in-out duration-1000 transform scale-105 opacity-0"
-         class="fixed inset-0 z-50 bg-black flex flex-col justify-between p-6 md:p-12 items-center overflow-hidden">
-      
-      <!-- Ambient light effect -->
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(180,140,60,0.05)_0%,transparent_80%)] pointer-events-none"></div>
-      <div class="absolute inset-0 bg-[linear-gradient(rgba(180,140,60,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(180,140,60,0.01)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
-      
-      <!-- Header row info -->
-      <div class="w-full max-w-6xl flex justify-between items-center text-xs tracking-[0.3em] font-mono text-zinc-600">
-        <div class="flex items-center gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>
-          <span>REC // PRESENT RECORD</span>
-        </div>
-        <div class="hidden sm:flex items-center gap-2 text-[10px]">
-          <span>FPS: 60.00</span>
-          <span>•</span>
-          <span>SHUTTER: 1/120</span>
-        </div>
+    <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:0;">
+      <p class="splash-eyebrow">Chasing Light & Cinematic Depth</p>
+      <div class="splash-divider"></div>
+      <h1 class="splash-name">DIYOTA<span>.</span></h1>
+    </div>
+
+    <div style="display:flex; flex-direction:column; align-items:center; gap:14px; position:relative;">
+      <button class="splash-btn" id="enterBtn">
+        Enter Experience
+        <i data-lucide="arrow-right"></i>
+      </button>
+      <p style="font-family:monospace; font-size:9px; letter-spacing:0.22em; color:#333; text-transform:uppercase;">Sound Enabled · Cinematic Showcase</p>
+    </div>
+
+    <div class="splash-meta">
+      <span>© 2026 DIYOTA</span>
+      <span>SYSTEM VERSION V2.0</span>
+    </div>
+  </div>
+
+  <!-- MAIN PORTFOLIO -->
+  <div id="main">
+
+    <!-- NAV -->
+    <nav>
+      <div style="display:flex; align-items:center;">
+        <span class="nav-brand">DIYOTA<span>.</span></span>
+        <div class="nav-divider"></div>
+        <span class="nav-label">Director Portfolio</span>
       </div>
+      <div class="nav-badge">
+        <div class="dot-online"></div>
+        ONLINE FEED
+      </div>
+    </nav>
 
-      <!-- Center Logo & Entry Action -->
-      <div class="flex flex-col items-center justify-center text-center space-y-6 md:space-y-10 my-auto">
-        <div class="flex flex-col gap-1.5">
-          <p class="text-xs md:text-sm text-zinc-500 font-sans font-light tracking-[0.5em] uppercase">
-            Chasing Light & Cinematic Depth
-          </p>
-          <div class="w-10 h-[0.5px] bg-gold-custom mx-auto my-2"></div>
-          <h1 class="font-bebas text-5xl md:text-8xl tracking-[8px] text-zinc-100">
-            DIYOTA<span class="text-gold-custom">.</span>
-          </h1>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-pill">
+        <i data-lucide="film"></i>
+        Curated Creative Showreel
+      </div>
+      <h2 class="hero-title">COMMERCIAL CUTS</h2>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">
+        Welcome to my portfolio.<br><br>
+        Here are <strong>3 sample videos</strong> crafted based on your company's requirements — product ads, automotive content, and lifestyle brand ads. All footage is <strong>AI-enhanced</strong>, edited manually with full attention to every cut, transition, and color grade.
+      </p>
+    </section>
+
+    <!-- SECTION LABEL -->
+    <div class="section-header">
+      <p class="section-eyebrow">Selected Work</p>
+      <h3 class="section-title">TOP 3 SAMPLES</h3>
+      <p class="section-sub">Each video demonstrates a different content style relevant to your needs</p>
+    </div>
+
+    <!-- VIDEO GRID -->
+    <div class="video-grid" id="videoGrid">
+
+      <!-- VIDEO 1 -->
+      <div class="vcard" id="card-1">
+        <div class="vplayer" id="player-1">
+          <div class="vplayer-stripe"></div>
+          <img id="thumb-1" src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=70" alt="Fortuner Turbo">
+          <div class="vplayer-vignette"></div>
+
+          <div class="vplay-btn-wrap" id="playbtn-1">
+            <div class="vplay-btn">
+              <i data-lucide="play"></i>
+            </div>
+            <span class="vplay-label">Click to preview</span>
+          </div>
+
+          <div class="vpause-overlay" id="pause-1" style="display:none;">
+            <div class="vpause-icon">
+              <div class="vpause-bar"></div>
+              <div class="vpause-bar"></div>
+            </div>
+          </div>
+
+          <div class="vmute-btn" id="mute-1" style="display:none;">
+            <i data-lucide="volume-2" id="mute-icon-1"></i>
+          </div>
+
+          <div class="vprogress-wrap" id="prog-wrap-1" style="display:none;">
+            <div class="vprogress-times">
+              <span id="cur-1">0.0s</span>
+              <span id="dur-1">12.0s</span>
+            </div>
+            <div class="vprogress-bar">
+              <div class="vprogress-fill" id="prog-fill-1" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="vbuffer" id="buf-1" style="display:none;">
+            <div class="vspinner"></div>
+            <span class="vbuffer-label">Buffering...</span>
+          </div>
         </div>
-
-        <div class="flex flex-col items-center gap-4 pt-4">
-          <button 
-            @click="hasEntered = true"
-            class="flex items-center gap-3 px-8 py-3.5 border border-zinc-800 rounded-full bg-zinc-950/40 text-xs md:text-sm font-sans tracking-[0.3em] font-medium uppercase text-zinc-300 hover:text-white hover:border-gold-custom/50 hover:bg-gold-custom/5 hover:shadow-[0_0_30px_rgba(201,168,76,0.15)] transition-all duration-500"
-          >
-            Enter Experience
-            <i data-lucide="arrow-right" class="w-4 h-4 text-gold-custom animate-pulse"></i>
-          </button>
-          
-          <div class="flex items-center gap-6 text-[10px] tracking-[0.2em] uppercase text-zinc-600 font-mono">
-            <span>SOUND ENABLED BD</span>
-            <span>•</span>
-            <span>CINEMATIC SHOWCASE</span>
+        <div class="vinfo">
+          <div class="vinfo-top">
+            <div>
+              <p class="vinfo-num">Sample 01</p>
+              <h3 class="vinfo-title">Fortuner × Turbo Garrett GTX</h3>
+            </div>
+            <span class="vinfo-badge">Product Ad</span>
+          </div>
+          <p class="vinfo-desc">Automotive product marketing video featuring the Toyota Fortuner with Garrett GTX3582R turbo modification. Edited in the style of viral TikTok automotive content. Real footage color graded manually in CapCut, AI used for visual enhancement.</p>
+          <div class="vinfo-tags">
+            <span class="vtag">Product Ad</span>
+            <span class="vtag">Automotive</span>
+            <span class="vtag">TikTok Style</span>
+            <span class="vtag">Color Grading</span>
+          </div>
+          <div class="vspec">
+            <p class="vspec-label">Specifications</p>
+            <p class="vspec-text">Speed ramp · bass sync · 4K upscale · dynamic shutter effect</p>
           </div>
         </div>
       </div>
 
-      <!-- Footer Info -->
-      <div class="w-full max-w-6xl flex justify-between items-center text-[10px] tracking-widest font-mono text-zinc-600">
-        <span>© 2026 DIYOTA</span>
-        <span>SYSTEM VERSION V2.0</span>
+      <!-- VIDEO 2 -->
+      <div class="vcard" id="card-2">
+        <div class="vplayer" id="player-2">
+          <div class="vplayer-stripe"></div>
+          <img id="thumb-2" src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=900&q=70" alt="Kahf R1M">
+          <div class="vplayer-vignette"></div>
+
+          <div class="vplay-btn-wrap" id="playbtn-2">
+            <div class="vplay-btn">
+              <i data-lucide="play"></i>
+            </div>
+            <span class="vplay-label">Click to preview</span>
+          </div>
+
+          <div class="vpause-overlay" id="pause-2" style="display:none;">
+            <div class="vpause-icon">
+              <div class="vpause-bar"></div>
+              <div class="vpause-bar"></div>
+            </div>
+          </div>
+
+          <div class="vmute-btn" id="mute-2" style="display:none;">
+            <i data-lucide="volume-2" id="mute-icon-2"></i>
+          </div>
+
+          <div class="vprogress-wrap" id="prog-wrap-2" style="display:none;">
+            <div class="vprogress-times">
+              <span id="cur-2">0.0s</span>
+              <span id="dur-2">12.0s</span>
+            </div>
+            <div class="vprogress-bar">
+              <div class="vprogress-fill" id="prog-fill-2" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="vbuffer" id="buf-2" style="display:none;">
+            <div class="vspinner"></div>
+            <span class="vbuffer-label">Buffering...</span>
+          </div>
+        </div>
+        <div class="vinfo">
+          <div class="vinfo-top">
+            <div>
+              <p class="vinfo-num">Sample 02</p>
+              <h3 class="vinfo-title">Kahf Silverwood × Yamaha R1M</h3>
+            </div>
+            <span class="vinfo-badge">Lifestyle Ad</span>
+          </div>
+          <p class="vinfo-desc">Lifestyle product ad for Kahf Silverwood fragrance, featuring a custom Yamaha R1M in gold/black livery. Multi-angle cinematic shots — FPV showroom walkthrough, parfum reveal, and night ride sequence. AI-generated footage, manually edited.</p>
+          <div class="vinfo-tags">
+            <span class="vtag">Lifestyle Ad</span>
+            <span class="vtag">Fragrance</span>
+            <span class="vtag">Cinematic</span>
+            <span class="vtag">Night Shoot</span>
+          </div>
+          <div class="vspec">
+            <p class="vspec-label">Specifications</p>
+            <p class="vspec-text">Gold & charcoal grading · ambient sound design · depth blur</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 3 -->
+      <div class="vcard" id="card-3">
+        <div class="vplayer" id="player-3">
+          <div class="vplayer-stripe"></div>
+          <img id="thumb-3" src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=900&q=70" alt="Specs">
+          <div class="vplayer-vignette"></div>
+
+          <div class="vplay-btn-wrap" id="playbtn-3">
+            <div class="vplay-btn">
+              <i data-lucide="play"></i>
+            </div>
+            <span class="vplay-label">Click to preview</span>
+          </div>
+
+          <div class="vpause-overlay" id="pause-3" style="display:none;">
+            <div class="vpause-icon">
+              <div class="vpause-bar"></div>
+              <div class="vpause-bar"></div>
+            </div>
+          </div>
+
+          <div class="vmute-btn" id="mute-3" style="display:none;">
+            <i data-lucide="volume-2" id="mute-icon-3"></i>
+          </div>
+
+          <div class="vprogress-wrap" id="prog-wrap-3" style="display:none;">
+            <div class="vprogress-times">
+              <span id="cur-3">0.0s</span>
+              <span id="dur-3">12.0s</span>
+            </div>
+            <div class="vprogress-bar">
+              <div class="vprogress-fill" id="prog-fill-3" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="vbuffer" id="buf-3" style="display:none;">
+            <div class="vspinner"></div>
+            <span class="vbuffer-label">Buffering...</span>
+          </div>
+        </div>
+        <div class="vinfo">
+          <div class="vinfo-top">
+            <div>
+              <p class="vinfo-num">Sample 03</p>
+              <h3 class="vinfo-title">Specs — Football & Novarspeed</h3>
+            </div>
+            <span class="vinfo-badge">Consumer Product</span>
+          </div>
+          <p class="vinfo-desc">Product ad for Specs Indonesia — featuring the football cleat and Novarspeed running shoe. Slow motion cinematic shots, action sequences, and clean product presentation. Demonstrates versatility beyond automotive content.</p>
+          <div class="vinfo-tags">
+            <span class="vtag">Consumer Product</span>
+            <span class="vtag">Sports</span>
+            <span class="vtag">Slow Motion</span>
+            <span class="vtag">Brand Ad</span>
+          </div>
+          <div class="vspec">
+            <p class="vspec-label">Specifications</p>
+            <p class="vspec-text">Dynamic tracking shots · motion overlays · slow-mo enhancement</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SKILLS -->
+    <div class="skills-section">
+      <p class="section-eyebrow">Capabilities</p>
+      <h3 class="section-title">WHAT I BRING</h3>
+      <div class="skills-grid">
+        <div class="skill-card"><p class="skill-name">CapCut</p><p class="skill-sub">Primary editing tool</p></div>
+        <div class="skill-card"><p class="skill-name">AI Video Generation</p><p class="skill-sub">Dola, Kling AI</p></div>
+        <div class="skill-card"><p class="skill-name">Color Grading</p><p class="skill-sub">Manual, cinematic style</p></div>
+        <div class="skill-card"><p class="skill-name">AI Image Enhancement</p><p class="skill-sub">ChatGPT, Midjourney</p></div>
+        <div class="skill-card"><p class="skill-name">Hook & Transition</p><p class="skill-sub">TikTok & Reels format</p></div>
+        <div class="skill-card"><p class="skill-name">Fast Turnaround</p><p class="skill-sub">Deadline oriented</p></div>
       </div>
     </div>
 
-
-    <!-- =================  MAIN PORTFOLIO GRID  ================= -->
-    <div x-show="hasEntered" 
-         x-transition:enter="transition ease-out duration-1000 delay-300 opacity-0 transform translate-y-4"
-         class="min-h-screen flex flex-col justify-between">
-      
-      <!-- Main Content Layout -->
-      <div class="w-full max-w-7xl mx-auto px-6 py-16 md:py-24 space-y-20">
-        
-        <!-- Header Section with Fine Line & Beautiful Alignment -->
-        <header class="flex justify-between items-center border-b border-zinc-900 pb-6">
-          <div class="flex items-center gap-4">
-            <h2 class="font-bebas text-3xl tracking-[4px] text-zinc-200">
-              DIYOTA<span class="text-gold-custom">.</span>
-            </h2>
-            <div class="h-4 w-[1px] bg-zinc-800"></div>
-            <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-500 uppercase">DIRECTOR PORTFOLIO</span>
-          </div>
-          <div class="flex items-center gap-2 text-[10px] font-mono tracking-widest text-[#c9a84c] border border-[#c9a84c]/20 bg-[#c9a84c]/5 px-2.5 py-1 rounded">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span>ONLINE FEED</span>
-          </div>
-        </header>
-
-        <!-- Intro Text Section -->
-        <section class="max-w-4xl mx-auto text-center flex flex-col items-center space-y-6 hero-glow relative">
-          <div class="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-full border border-zinc-900 text-[10px] font-mono tracking-[0.2em] text-gold-custom uppercase">
-            <i data-lucide="film" class="w-3 h-3 text-gold-custom"></i>
-            <span>Curated Creative Showreel</span>
-          </div>
-          
-          <h2 class="font-bebas text-4xl md:text-7xl tracking-wider text-zinc-100 uppercase">
-            COMMERCIAL CUTS
-          </h2>
-          
-          <div class="w-12 h-[1px] bg-[#c9a84c]"></div>
-          
-          <div class="max-w-[650px] text-sm md:text-base leading-relaxed text-zinc-400 font-light px-4">
-            Welcome to my portfolio.<br><br>
-            Here are <strong class="text-zinc-200 font-medium">3 sample videos</strong> crafted based on your company's requirements — product ads, automotive content, and lifestyle brand ads. All footage is <strong class="text-zinc-200 font-medium">AI-enhanced</strong>, edited manually with attention to every cut, transition, and color grade.
-          </div>
-        </section>
-
-        <!-- Video Portfolio Grid Layout -->
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          <!-- ================= VIDEO 1 ================= -->
-          <div class="border border-zinc-900 rounded bg-[#0f0f0f] overflow-hidden group hover:border-zinc-800 transition-all duration-300">
-            <!-- Video Player Box -->
-            <div @click="togglePlay(1)"
-                 class="video-stripe-bg relative w-full aspect-video bg-[#141414] overflow-hidden flex flex-col justify-center items-center cursor-pointer select-none">
-              
-              <!-- Video Placeholder Image / Thumbnail -->
-              <img x-show="!playbackStates[1]"
-                   src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80" 
-                   alt="Fortuner × Turbo Garrett" 
-                   class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-100 filter brightness-[0.25] grayscale-[30%] group-hover:scale-105">
-              
-              <!-- Real Video Element -->
-              <template x-if="playbackStates[1]">
-                <video id="video-1"
-                       src="https://github.com/exora8/diyota.github.io/raw/refs/heads/main/Garrett-Fortuner.mp4" 
-                       autoplay 
-                       loop 
-                       playsinline
-                       preload="auto"
-                       class="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 opacity-90"
-                       @timeupdate="
-                         playProgress[1] = ($el.currentTime / $el.duration) * 100 || 0;
-                         videoCurrentTimes[1] = $el.currentTime;
-                       "
-                       @loadedmetadata="videoDurations[1] = $el.duration || 12"
-                       @waiting="videoLoadingStates[1] = true"
-                       @playing="videoLoadingStates[1] = false"
-                       @canplay="videoLoadingStates[1] = false"
-                       @seeking="videoLoadingStates[1] = true"
-                       @seeked="videoLoadingStates[1] = false"
-                       @loadstart="videoLoadingStates[1] = true"
-                       @loadeddata="videoLoadingStates[1] = false">
-                </video>
-              </template>
-
-              <!-- Loading Indicator overlay (Buffering State) -->
-              <div x-show="playbackStates[1]" x-cloak style="display: none;">
-                <div x-show="videoLoadingStates[1]" 
-                     class="absolute inset-0 bg-[#0a0a0ae6] backdrop-blur-xs flex flex-col justify-center items-center z-20 pointer-events-none">
-                  <div class="w-8 h-8 border-2 border-t-gold-custom border-zinc-800 rounded-full animate-spin mb-3"></div>
-                  <span class="text-[10px] font-mono tracking-[0.2em] text-[#c9a84c] uppercase">Buffering...</span>
-                </div>
-              </div>
-
-              <!-- Mute / Unmute Control Icon -->
-              <div x-show="playbackStates[1]" 
-                   class="absolute top-4 right-4 z-20 flex bg-black/60 backdrop-blur border border-white/10 rounded-full p-2 text-zinc-300 pointer-events-auto">
-                <button @click.stop="toggleMute()" class="hover:text-amber-400 transition-colors cursor-pointer">
-                  <template x-if="volumeOn">
-                    <i data-lucide="volume-2" class="w-4 h-4 text-[#c9a84c]"></i>
-                  </template>
-                  <template x-if="!volumeOn">
-                    <i data-lucide="volume-x" class="w-4 h-4 text-zinc-400"></i>
-                  </template>
-                </button>
-              </div>
-
-              <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.6)_100%)]"></div>
-
-              <!-- Inside Active Control Layer -->
-              <div x-show="playbackStates[1]" class="absolute inset-0 z-10 flex flex-col justify-between p-6">
-                <!-- Hover double-bar (Pause) icon -->
-                <div class="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  <div class="w-14 h-14 border border-white/15 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    <span class="w-4 h-5 flex justify-between">
-                      <span class="w-1 bg-zinc-200 rounded-sm"></span>
-                      <span class="w-1 bg-zinc-200 rounded-sm"></span>
-                    </span>
-                  </div>
-                </div>
-
-                <div></div>
-
-                <!-- Custom Audio & Range Bar -->
-                <div class="w-full space-y-2 z-20">
-                  <div class="flex justify-between items-center text-[10px] font-mono text-zinc-300 drop-shadow">
-                    <span x-text="(videoCurrentTimes[1] || 0).toFixed(1) + 's'">0.0s</span>
-                    <span x-text="(videoDurations[1] || 12).toFixed(1) + 's'">12.0s</span>
-                  </div>
-                  <div class="w-full bg-zinc-950/80 h-1 rounded-full overflow-hidden border border-white/5">
-                    <div class="h-full bg-[#c9a84c] rounded-full shadow-[0_0_8px_#c9a84c]" :style="'width: ' + playProgress[1] + '%'"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Standby Play Trigger -->
-              <div x-show="!playbackStates[1]" class="flex flex-col items-center justify-center z-10 transition-transform group-hover:scale-105 duration-300">
-                <button @click.stop="togglePlay(1)"
-                        class="w-16 h-16 cursor-pointer border border-[#c9a84c]/20 bg-black/60 rounded-full flex items-center justify-center text-zinc-300 hover:text-white hover:border-[#c9a84c]/60 hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] transition-all duration-300 group-hover:bg-[#c9a84c]/10">
-                  <i data-lucide="play" class="w-6 h-6 ml-1 text-zinc-300 duration-300"></i>
-                </button>
-                <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-400 font-medium uppercase mt-4">Click to preview sequence</span>
-              </div>
-            </div>
-
-            <!-- Specifications metadata below -->
-            <div class="p-6 space-y-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <span class="text-[10px] font-mono tracking-widest text-[#c9a84c]">Sample 01</span>
-                  <h3 class="font-bebas text-2xl tracking-wide text-zinc-100 mt-1 uppercase">Fortuner × Turbo Garrett GTX</h3>
-                </div>
-                <span class="text-[10px] font-mono px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-400 rounded">Product Ad</span>
-              </div>
-              <p class="text-xs text-zinc-400 font-light leading-relaxed">
-                Automotive product marketing video featuring the Toyota Fortuner with Garrett GTX3582R turbo modification. Shot in the style of viral TikTok automotive content. Real footage edited and color graded manually in CapCut, with AI used for visual enhancement.
-              </p>
-              <div class="flex flex-wrap gap-2 pt-2">
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Product Ad</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Automotive</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">TikTok Style</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Color Grading</span>
-              </div>
-              <div class="border-t border-zinc-900 pt-4 mt-2">
-                <span class="text-[9px] font-mono tracking-widest text-zinc-600 block uppercase mb-1">SPECIFICATIONS:</span>
-                <p class="text-[10px] font-mono text-zinc-400 leading-normal">
-                  Speed ramped, heavy bass sync, 4K upscale, dynamic shutter effect.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- ================= VIDEO 2 ================= -->
-          <div class="border border-zinc-900 rounded bg-[#0f0f0f] overflow-hidden group hover:border-zinc-800 transition-all duration-300">
-            <!-- Video Player Box -->
-            <div @click="togglePlay(2)"
-                 class="video-stripe-bg relative w-full aspect-video bg-[#141414] overflow-hidden flex flex-col justify-center items-center cursor-pointer select-none">
-              
-              <!-- Video Placeholder Image / Thumbnail -->
-              <img x-show="!playbackStates[2]"
-                   src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1200&q=80" 
-                   alt="Kahf Silverwood × Yamaha" 
-                   class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-100 filter brightness-[0.25] grayscale-[30%] group-hover:scale-105">
-              
-              <!-- Real Video Element -->
-              <template x-if="playbackStates[2]">
-                <video id="video-2"
-                       src="https://github.com/exora8/diyota.github.io/raw/refs/heads/main/kahf-R1M.mp4" 
-                       autoplay 
-                       loop 
-                       playsinline
-                       preload="auto"
-                       class="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 opacity-90"
-                       @timeupdate="
-                         playProgress[2] = ($el.currentTime / $el.duration) * 100 || 0;
-                         videoCurrentTimes[2] = $el.currentTime;
-                       "
-                       @loadedmetadata="videoDurations[2] = $el.duration || 12"
-                       @waiting="videoLoadingStates[2] = true"
-                       @playing="videoLoadingStates[2] = false"
-                       @canplay="videoLoadingStates[2] = false"
-                       @seeking="videoLoadingStates[2] = true"
-                       @seeked="videoLoadingStates[2] = false"
-                       @loadstart="videoLoadingStates[2] = true"
-                       @loadeddata="videoLoadingStates[2] = false">
-                </video>
-              </template>
-
-              <!-- Loading Indicator overlay (Buffering State) -->
-              <div x-show="playbackStates[2]" x-cloak style="display: none;">
-                <div x-show="videoLoadingStates[2]" 
-                     class="absolute inset-0 bg-[#0a0a0ae6] backdrop-blur-xs flex flex-col justify-center items-center z-20 pointer-events-none">
-                  <div class="w-8 h-8 border-2 border-t-gold-custom border-zinc-800 rounded-full animate-spin mb-3"></div>
-                  <span class="text-[10px] font-mono tracking-[0.2em] text-[#c9a84c] uppercase">Buffering...</span>
-                </div>
-              </div>
-
-              <!-- Mute / Unmute Control Icon -->
-              <div x-show="playbackStates[2]" 
-                   class="absolute top-4 right-4 z-20 flex bg-black/60 backdrop-blur border border-white/10 rounded-full p-2 text-zinc-300 pointer-events-auto">
-                <button @click.stop="toggleMute()" class="hover:text-amber-400 transition-colors cursor-pointer">
-                  <template x-if="volumeOn">
-                    <i data-lucide="volume-2" class="w-4 h-4 text-[#c9a84c]"></i>
-                  </template>
-                  <template x-if="!volumeOn">
-                    <i data-lucide="volume-x" class="w-4 h-4 text-zinc-400"></i>
-                  </template>
-                </button>
-              </div>
-
-              <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.6)_100%)]"></div>
-
-              <!-- Inside Active Control Layer -->
-              <div x-show="playbackStates[2]" class="absolute inset-0 z-10 flex flex-col justify-between p-6">
-                <!-- Hover double-bar (Pause) icon -->
-                <div class="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  <div class="w-14 h-14 border border-white/15 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    <span class="w-4 h-5 flex justify-between">
-                      <span class="w-1 bg-zinc-200 rounded-sm"></span>
-                      <span class="w-1 bg-zinc-200 rounded-sm"></span>
-                    </span>
-                  </div>
-                </div>
-
-                <div></div>
-
-                <!-- Custom Audio & Range Bar -->
-                <div class="w-full space-y-2 z-20">
-                  <div class="flex justify-between items-center text-[10px] font-mono text-zinc-300 drop-shadow">
-                    <span x-text="(videoCurrentTimes[2] || 0).toFixed(1) + 's'">0.0s</span>
-                    <span x-text="(videoDurations[2] || 12).toFixed(1) + 's'">12.0s</span>
-                  </div>
-                  <div class="w-full bg-zinc-950/80 h-1 rounded-full overflow-hidden border border-white/5">
-                    <div class="h-full bg-[#c9a84c] rounded-full shadow-[0_0_8px_#c9a84c]" :style="'width: ' + playProgress[2] + '%'"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Standby Play Trigger -->
-              <div x-show="!playbackStates[2]" class="flex flex-col items-center justify-center z-10 transition-transform group-hover:scale-105 duration-300">
-                <button @click.stop="togglePlay(2)"
-                        class="w-16 h-16 cursor-pointer border border-[#c9a84c]/20 bg-black/60 rounded-full flex items-center justify-center text-zinc-300 hover:text-white hover:border-[#c9a84c]/60 hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] transition-all duration-300 group-hover:bg-[#c9a84c]/10">
-                  <i data-lucide="play" class="w-6 h-6 ml-1 text-zinc-300 duration-300"></i>
-                </button>
-                <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-400 font-medium uppercase mt-4">Click to preview sequence</span>
-              </div>
-            </div>
-
-            <!-- Specifications metadata below -->
-            <div class="p-6 space-y-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <span class="text-[10px] font-mono tracking-widest text-[#c9a84c]">Sample 02</span>
-                  <h3 class="font-bebas text-2xl tracking-wide text-zinc-100 mt-1 uppercase">Kahf Silverwood × Yamaha R1M</h3>
-                </div>
-                <span class="text-[10px] font-mono px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-400 rounded">Lifestyle Ad</span>
-              </div>
-              <p class="text-xs text-zinc-400 font-light leading-relaxed">
-                Lifestyle product ad for Kahf Silverwood fragrance, featuring a custom Yamaha R1M in gold/black livery. Multi-angle cinematic shots — FPV showroom walkthrough, parfum reveal. AI-generated footage, manually edited.
-              </p>
-              <div class="flex flex-wrap gap-2 pt-2">
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Lifestyle Ad</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Fragrance</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Cinematic</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Night Shoot</span>
-              </div>
-              <div class="border-t border-zinc-900 pt-4 mt-2">
-                <span class="text-[9px] font-mono tracking-widest text-zinc-600 block uppercase mb-1">SPECIFICATIONS:</span>
-                <p class="text-[10px] font-mono text-zinc-400 leading-normal">
-                  Gold & Charcoal grading, ambient wind sound design, split screen, depth blur.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- ================= VIDEO 3 ================= -->
-          <div class="border border-zinc-900 rounded bg-[#0f0f0f] overflow-hidden group hover:border-zinc-800 transition-all duration-300">
-            <!-- Video Player Box -->
-            <div @click="togglePlay(3)"
-                 class="video-stripe-bg relative w-full aspect-video bg-[#141414] overflow-hidden flex flex-col justify-center items-center cursor-pointer select-none">
-              
-              <!-- Video Placeholder Image / Thumbnail -->
-              <img x-show="!playbackStates[3]"
-                   src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80" 
-                   alt="Specs Football × Novarspeed" 
-                   class="absolute inset-0 w-full h-full object-cover transition-all duration-1000 scale-100 filter brightness-[0.25] grayscale-[30%] group-hover:scale-105">
-              
-              <!-- Real Video Element -->
-              <template x-if="playbackStates[3]">
-                <video id="video-3"
-                       src="https://github.com/exora8/diyota.github.io/raw/refs/heads/main/specs-12.mp4" 
-                       autoplay 
-                       loop 
-                       playsinline
-                       preload="auto"
-                       class="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 opacity-90"
-                       @timeupdate="
-                         playProgress[3] = ($el.currentTime / $el.duration) * 100 || 0;
-                         videoCurrentTimes[3] = $el.currentTime;
-                       "
-                       @loadedmetadata="videoDurations[3] = $el.duration || 12"
-                       @waiting="videoLoadingStates[3] = true"
-                       @playing="videoLoadingStates[3] = false"
-                       @canplay="videoLoadingStates[3] = false"
-                       @seeking="videoLoadingStates[3] = true"
-                       @seeked="videoLoadingStates[3] = false"
-                       @loadstart="videoLoadingStates[3] = true"
-                       @loadeddata="videoLoadingStates[3] = false">
-                </video>
-              </template>
-
-              <!-- Loading Indicator overlay (Buffering State) -->
-              <div x-show="playbackStates[3]" x-cloak style="display: none;">
-                <div x-show="videoLoadingStates[3]" 
-                     class="absolute inset-0 bg-[#0a0a0ae6] backdrop-blur-xs flex flex-col justify-center items-center z-20 pointer-events-none">
-                  <div class="w-8 h-8 border-2 border-t-gold-custom border-zinc-800 rounded-full animate-spin mb-3"></div>
-                  <span class="text-[10px] font-mono tracking-[0.2em] text-[#c9a84c] uppercase">Buffering...</span>
-                </div>
-              </div>
-
-              <!-- Mute / Unmute Control Icon -->
-              <div x-show="playbackStates[3]" 
-                   class="absolute top-4 right-4 z-20 flex bg-black/60 backdrop-blur border border-white/10 rounded-full p-2 text-zinc-300 pointer-events-auto">
-                <button @click.stop="toggleMute()" class="hover:text-amber-400 transition-colors cursor-pointer">
-                  <template x-if="volumeOn">
-                    <i data-lucide="volume-2" class="w-4 h-4 text-[#c9a84c]"></i>
-                  </template>
-                  <template x-if="!volumeOn">
-                    <i data-lucide="volume-x" class="w-4 h-4 text-zinc-400"></i>
-                  </template>
-                </button>
-              </div>
-
-              <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.6)_100%)]"></div>
-
-              <!-- Inside Active Control Layer -->
-              <div x-show="playbackStates[3]" class="absolute inset-0 z-10 flex flex-col justify-between p-6">
-                <!-- Hover double-bar (Pause) icon -->
-                <div class="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  <div class="w-14 h-14 border border-white/15 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-zinc-300 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    <span class="w-4 h-5 flex justify-between">
-                      <span class="w-1 bg-zinc-200 rounded-sm"></span>
-                      <span class="w-1 bg-zinc-200 rounded-sm"></span>
-                    </span>
-                  </div>
-                </div>
-
-                <div></div>
-
-                <!-- Custom Audio & Range Bar -->
-                <div class="w-full space-y-2 z-20">
-                  <div class="flex justify-between items-center text-[10px] font-mono text-zinc-300 drop-shadow">
-                    <span x-text="(videoCurrentTimes[3] || 0).toFixed(1) + 's'">0.0s</span>
-                    <span x-text="(videoDurations[3] || 12).toFixed(1) + 's'">12.0s</span>
-                  </div>
-                  <div class="w-full bg-zinc-950/80 h-1 rounded-full overflow-hidden border border-white/5">
-                    <div class="h-full bg-[#c9a84c] rounded-full shadow-[0_0_8px_#c9a84c]" :style="'width: ' + playProgress[3] + '%'"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Standby Play Trigger -->
-              <div x-show="!playbackStates[3]" class="flex flex-col items-center justify-center z-10 transition-transform group-hover:scale-105 duration-300">
-                <button @click.stop="togglePlay(3)"
-                        class="w-16 h-16 cursor-pointer border border-[#c9a84c]/20 bg-black/60 rounded-full flex items-center justify-center text-zinc-300 hover:text-white hover:border-[#c9a84c]/60 hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] transition-all duration-300 group-hover:bg-[#c9a84c]/10">
-                  <i data-lucide="play" class="w-6 h-6 ml-1 text-zinc-300 duration-300"></i>
-                </button>
-                <span class="text-[10px] font-mono tracking-[0.25em] text-zinc-400 font-medium uppercase mt-4">Click to preview sequence</span>
-              </div>
-            </div>
-
-            <!-- Specifications metadata below -->
-            <div class="p-6 space-y-4">
-              <div class="flex justify-between items-start">
-                <div>
-                  <span class="text-[10px] font-mono tracking-widest text-[#c9a84c]">Sample 03</span>
-                  <h3 class="font-bebas text-2xl tracking-wide text-zinc-100 mt-1 uppercase">Specs Football × Novarspeed</h3>
-                </div>
-                <span class="text-[10px] font-mono px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-400 rounded">Consumer Product</span>
-              </div>
-              <p class="text-xs text-zinc-400 font-light leading-relaxed">
-                Product ad for Specs Indonesia — featuring the football cleat and Novarspeed running shoe. Slow motion cinematic shots, action sequences, and clean product presentation. Demonstrates versatility across consumer product categories beyond automotive.
-              </p>
-              <div class="flex flex-wrap gap-2 pt-2">
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Consumer Product</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Sports</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Slow Motion</span>
-                <span class="text-[9px] font-mono px-2.5 py-1 bg-zinc-950 border border-zinc-900 rounded-full text-zinc-500">Brand Ad</span>
-              </div>
-              <div class="border-t border-zinc-900 pt-4 mt-2">
-                <span class="text-[9px] font-mono tracking-widest text-zinc-600 block uppercase mb-1">SPECIFICATIONS:</span>
-                <p class="text-[10px] font-mono text-zinc-400 leading-normal">
-                  Dynamic tracking shots, motion graphics overlays, water splash enhancement.
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </main>
-      </div>
-
-      <!-- Standing Minimalist Footer -->
-      <footer class="w-full border-t border-zinc-900 px-6 py-8">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-xs tracking-wider text-zinc-500 font-mono gap-4">
-          <div class="flex items-center gap-2">
-            <span class="w-1.5 h-1.5 bg-gold-custom rounded-full animate-pulse"></span>
-            <span>CINEMATIC SHOWCASE PRO // WEB</span>
-          </div>
-          <span>© 1999-2026 DIYOTA. ALL RIGHTS RESERVED.</span>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-dot"></div>
+          Cinematic Showcase · Web
         </div>
-      </footer>
-
-    </div>
+        <span class="footer-right">© 2026 DIYOTA. ALL RIGHTS RESERVED.</span>
+      </div>
+    </footer>
 
   </div>
 
+  <script>
+    lucide.createIcons();
+
+    const splash = document.getElementById('splash');
+    const main = document.getElementById('main');
+    const enterBtn = document.getElementById('enterBtn');
+
+    enterBtn.addEventListener('click', () => {
+      splash.classList.add('leaving');
+      setTimeout(() => {
+        splash.style.display = 'none';
+        main.classList.add('visible');
+      }, 800);
+    });
+
+    const videos = {};
+    let globalMuted = false;
+
+    const sources = {
+      1: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/Garrett-Fortuner.mp4',
+      2: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/kahf-R1M.mp4',
+      3: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/specs-12.mp4'
+    };
+
+    function stopAll(except) {
+      [1,2,3].forEach(id => {
+        if (id !== except && videos[id]) {
+          videos[id].pause();
+          videos[id].currentTime = 0;
+          resetPlayer(id);
+        }
+      });
+    }
+
+    function resetPlayer(id) {
+      document.getElementById('playbtn-' + id).style.display = 'flex';
+      document.getElementById('pause-' + id).style.display = 'none';
+      document.getElementById('mute-' + id).style.display = 'none';
+      document.getElementById('prog-wrap-' + id).style.display = 'none';
+      document.getElementById('thumb-' + id).style.display = 'block';
+      document.getElementById('prog-fill-' + id).style.width = '0%';
+      if (videos[id]) {
+        videos[id].style.display = 'none';
+        delete videos[id];
+      }
+    }
+
+    function initVideo(id) {
+      stopAll(id);
+
+      const buf = document.getElementById('buf-' + id);
+      buf.style.display = 'flex';
+
+      const vid = document.createElement('video');
+      vid.src = sources[id];
+      vid.autoplay = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.muted = globalMuted;
+      vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;';
+
+      vid.addEventListener('waiting', () => { buf.style.display = 'flex'; });
+      vid.addEventListener('playing', () => { buf.style.display = 'none'; });
+      vid.addEventListener('canplay', () => { buf.style.display = 'none'; });
+      vid.addEventListener('loadeddata', () => { buf.style.display = 'none'; });
+
+      vid.addEventListener('loadedmetadata', () => {
+        document.getElementById('dur-' + id).textContent = vid.duration.toFixed(1) + 's';
+      });
+
+      vid.addEventListener('timeupdate', () => {
+        const pct = (vid.currentTime / vid.duration) * 100 || 0;
+        document.getElementById('prog-fill-' + id).style.width = pct.toFixed(1) + '%';
+        document.getElementById('cur-' + id).textContent = vid.currentTime.toFixed(1) + 's';
+      });
+
+      document.getElementById('player-' + id).appendChild(vid);
+      videos[id] = vid;
+
+      document.getElementById('thumb-' + id).style.display = 'none';
+      document.getElementById('playbtn-' + id).style.display = 'none';
+      document.getElementById('pause-' + id).style.display = 'flex';
+      document.getElementById('mute-' + id).style.display = 'flex';
+      document.getElementById('prog-wrap-' + id).style.display = 'block';
+    }
+
+    [1,2,3].forEach(id => {
+      const player = document.getElementById('player-' + id);
+
+      player.addEventListener('click', () => {
+        if (!videos[id]) {
+          initVideo(id);
+        } else {
+          if (videos[id].paused) {
+            videos[id].play();
+          } else {
+            videos[id].pause();
+          }
+        }
+      });
+
+      document.getElementById('mute-' + id).addEventListener('click', (e) => {
+        e.stopPropagation();
+        globalMuted = !globalMuted;
+        [1,2,3].forEach(vid => {
+          if (videos[vid]) videos[vid].muted = globalMuted;
+        });
+        const icon = document.getElementById('mute-icon-' + id);
+        icon.setAttribute('data-lucide', globalMuted ? 'volume-x' : 'volume-2');
+        lucide.createIcons();
+      });
+    });
+  </script>
 </body>
 </html>
