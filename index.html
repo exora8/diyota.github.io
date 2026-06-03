@@ -1043,6 +1043,76 @@
 
     </div>
 
+    <!-- VIDEO 5 — THE CHAIR (LANDSCAPE) -->
+    <div class="section-header" style="padding-top: 0;">
+      <p class="section-eyebrow">Storytelling Project</p>
+      <h3 class="section-title">THE CHAIR</h3>
+      <p class="section-sub">Environmental storytelling — tanpa dialog, tanpa wajah, murni visual</p>
+    </div>
+    <div style="max-width:1200px; margin: 0 auto; padding: 0 40px 48px;">
+      <div class="vcard" id="card-5">
+        <div class="vplayer" id="player-5">
+          <div class="vplayer-stripe"></div>
+          <img id="thumb-5" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=70" alt="The Chair">
+          <div class="vplayer-vignette"></div>
+
+          <div class="vplay-btn-wrap" id="playbtn-5">
+            <div class="vplay-btn">
+              <i data-lucide="play"></i>
+            </div>
+            <span class="vplay-label">Klik untuk pratinjau</span>
+          </div>
+
+          <div class="vpause-overlay" id="pause-5" style="display:none;">
+            <div class="vpause-icon">
+              <div class="vpause-bar"></div>
+              <div class="vpause-bar"></div>
+            </div>
+          </div>
+
+          <div class="vmute-btn" id="mute-5" style="display:none;">
+            <i data-lucide="volume-2" id="mute-icon-5"></i>
+          </div>
+
+          <div class="vprogress-wrap" id="prog-wrap-5" style="display:none;">
+            <div class="vprogress-times">
+              <span id="cur-5">0.0d</span>
+              <span id="dur-5">0.0d</span>
+            </div>
+            <div class="vprogress-bar">
+              <div class="vprogress-fill" id="prog-fill-5" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="vbuffer" id="buf-5" style="display:none;">
+            <div class="vspinner"></div>
+            <span class="vbuffer-label">Memuat...</span>
+          </div>
+          <div class="vwatermark" id="wm-5"><span>PRATINJAU</span></div>
+        </div>
+        <div class="vinfo">
+          <div class="vinfo-top">
+            <div>
+              <p class="vinfo-num">Video 05</p>
+              <h3 class="vinfo-title">The Chair</h3>
+            </div>
+            <span class="vinfo-badge">Storytelling</span>
+          </div>
+          <p class="vinfo-desc">Sebuah kursi di tepi pantai. Banyak orang akan melihatnya sebagai benda biasa — sesuatu yang tidak memiliki arti khusus. Namun setiap benda menyimpan cerita yang tidak selalu terlihat.<br><br>"The Chair" adalah visual storytelling tentang makna, persepsi, dan kecenderungan manusia untuk menghargai sesuatu hanya ketika mereka memahami kisah di baliknya.</p>
+          <div class="vinfo-tags">
+            <span class="vtag">Storytelling</span>
+            <span class="vtag">Sinematik</span>
+            <span class="vtag">Environmental</span>
+            <span class="vtag">AI Generated</span>
+          </div>
+          <div class="vspec">
+            <p class="vspec-label">Teknik yang dipakai</p>
+            <p class="vspec-text">Environmental storytelling · static cam · pacing manual · color grade dramatis</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- VIDEO 4 — PORTRAIT ROW -->
     <div class="portrait-row">
       <div class="vcard vcard--portrait" id="card-4">
@@ -1157,11 +1227,12 @@
       1: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/Garrett-Fortuner.mp4',
       2: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/kahf-R1M.mp4',
       3: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/specs-12.mp4',
-      4: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/sport-shoes-review.mp4'
+      4: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/sport-shoes-review.mp4',
+      5: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/lv_0_20260603210454.mp4'
     };
 
     function stopAll(except) {
-      [1,2,3,4].forEach(id => {
+      [1,2,3,4,5].forEach(id => {
         if (id !== except && videos[id]) {
           videos[id].pause();
           videos[id].currentTime = 0;
@@ -1234,7 +1305,7 @@
       document.getElementById('prog-wrap-' + id).style.display = 'block';
     }
 
-    [1,2,3,4].forEach(id => {
+    [1,2,3,4,5].forEach(id => {
       const player = document.getElementById('player-' + id);
 
       player.addEventListener('click', (e) => {
@@ -1254,7 +1325,7 @@
         e.stopPropagation();
         e.preventDefault();
         globalMuted = !globalMuted;
-        [1,2,3,4].forEach(vid => {
+        [1,2,3,4,5].forEach(vid => {
           if (videos[vid]) videos[vid].muted = globalMuted;
         });
         const icon = document.getElementById('mute-icon-' + id);
