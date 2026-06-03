@@ -351,6 +351,55 @@
     }
     .vplayer * { -webkit-tap-highlight-color: transparent; }
 
+    /* ── VIDEO 4 EXPAND BEHAVIOR ── */
+    /* Default: landscape (16/9). After expand: portrait (9/16). Smooth transition. */
+    #player-4 {
+      aspect-ratio: 16/9;
+      transition: aspect-ratio 0s; /* aspect-ratio can't animate, we animate height instead */
+    }
+
+    /* We animate the height via max-height trick */
+    #player-4-wrap {
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 1000px; /* large enough for landscape */
+    }
+
+    #player-4-wrap.expanded {
+      max-height: 2000px; /* allow portrait height */
+    }
+
+    /* The actual player in expanded state */
+    #player-4.portrait-mode {
+      aspect-ratio: 9/16;
+    }
+
+    /* Expand hint badge */
+    .vexpand-hint {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.7);
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(0,0,0,0.55);
+      padding: 4px 8px;
+      border-radius: 100px;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #player-4.portrait-mode .vexpand-hint {
+      opacity: 0;
+    }
+
     .vplayer-stripe {
       position: absolute;
       inset: 0;
@@ -656,31 +705,6 @@
       font-size: 10px;
       color: #555;
       line-height: 1.6;
-    }
-
-    /* ── PORTRAIT CARD ── */
-    .vcard--portrait .vplayer {
-      aspect-ratio: 9/16;
-      max-height: 520px;
-    }
-
-    .portrait-row {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 80px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .portrait-row .vcard {
-      width: 100%;
-      max-width: 320px;
-    }
-
-    @media (max-width: 900px) {
-      .portrait-row { padding: 0 24px 60px; }
-      .portrait-row .vcard { max-width: 100%; }
-      .vcard--portrait .vplayer { max-height: none; }
     }
 
     /* ── SKILLS ── */
@@ -1041,6 +1065,77 @@
         </div>
       </div>
 
+      <!-- VIDEO 4 — sejajar Video 03, landscape default, expand ke portrait saat diklik -->
+      <div class="vcard" id="card-4">
+        <div id="player-4-wrap">
+          <div class="vplayer" id="player-4">
+            <div class="vplayer-stripe"></div>
+            <img id="thumb-4" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=70" alt="AI Shoe Reviewer">
+            <div class="vplayer-vignette"></div>
+
+            <!-- Expand hint — hanya tampil sebelum diklik -->
+            <div class="vexpand-hint" id="expand-hint-4">
+              <i data-lucide="expand" style="width:10px;height:10px;"></i>
+              Klik · expand ke portrait
+            </div>
+
+            <div class="vplay-btn-wrap" id="playbtn-4">
+              <div class="vplay-btn">
+                <i data-lucide="play"></i>
+              </div>
+              <span class="vplay-label">Klik untuk pratinjau</span>
+            </div>
+
+            <div class="vpause-overlay" id="pause-4" style="display:none;">
+              <div class="vpause-icon">
+                <div class="vpause-bar"></div>
+                <div class="vpause-bar"></div>
+              </div>
+            </div>
+
+            <div class="vmute-btn" id="mute-4" style="display:none;">
+              <i data-lucide="volume-2" id="mute-icon-4"></i>
+            </div>
+
+            <div class="vprogress-wrap" id="prog-wrap-4" style="display:none;">
+              <div class="vprogress-times">
+                <span id="cur-4">0.0d</span>
+                <span id="dur-4">0.0d</span>
+              </div>
+              <div class="vprogress-bar">
+                <div class="vprogress-fill" id="prog-fill-4" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="vbuffer" id="buf-4" style="display:none;">
+              <div class="vspinner"></div>
+              <span class="vbuffer-label">Memuat...</span>
+            </div>
+            <div class="vwatermark" id="wm-4"><span>PRATINJAU</span></div>
+          </div>
+        </div>
+        <div class="vinfo">
+          <div class="vinfo-top">
+            <div>
+              <p class="vinfo-num">Video 04</p>
+              <h3 class="vinfo-title">AI Shoe Reviewer</h3>
+            </div>
+            <span class="vinfo-badge">Creator Content</span>
+          </div>
+          <p class="vinfo-desc">Karakter AI realistis yang mereview sepatu — berlatar Lapangan Merdeka Medan yang sepenuhnya di-generate AI. Format talking-head seperti konten kreator sungguhan, tapi 100% dibuat tanpa kamera. Dikerjakan dari nol: generate karakter, build environment, edit di CapCut.</p>
+          <div class="vinfo-tags">
+            <span class="vtag">Creator Content</span>
+            <span class="vtag">Personal Branding</span>
+            <span class="vtag">AI Character</span>
+            <span class="vtag">Talking Head</span>
+          </div>
+          <div class="vspec">
+            <p class="vspec-label">Teknik yang dipakai</p>
+            <p class="vspec-text">AI character gen · environment gen · CapCut manual edit</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- VIDEO 5 — THE CHAIR (LANDSCAPE) -->
@@ -1113,71 +1208,6 @@
       </div>
     </div>
 
-    <!-- VIDEO 4 — PORTRAIT ROW -->
-    <div class="portrait-row">
-      <div class="vcard vcard--portrait" id="card-4">
-        <div class="vplayer" id="player-4">
-          <div class="vplayer-stripe"></div>
-          <img id="thumb-4" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=70" alt="AI Shoe Reviewer">
-          <div class="vplayer-vignette"></div>
-
-          <div class="vplay-btn-wrap" id="playbtn-4">
-            <div class="vplay-btn">
-              <i data-lucide="play"></i>
-            </div>
-            <span class="vplay-label">Klik untuk pratinjau</span>
-          </div>
-
-          <div class="vpause-overlay" id="pause-4" style="display:none;">
-            <div class="vpause-icon">
-              <div class="vpause-bar"></div>
-              <div class="vpause-bar"></div>
-            </div>
-          </div>
-
-          <div class="vmute-btn" id="mute-4" style="display:none;">
-            <i data-lucide="volume-2" id="mute-icon-4"></i>
-          </div>
-
-          <div class="vprogress-wrap" id="prog-wrap-4" style="display:none;">
-            <div class="vprogress-times">
-              <span id="cur-4">0.0d</span>
-              <span id="dur-4">0.0d</span>
-            </div>
-            <div class="vprogress-bar">
-              <div class="vprogress-fill" id="prog-fill-4" style="width:0%"></div>
-            </div>
-          </div>
-
-          <div class="vbuffer" id="buf-4" style="display:none;">
-            <div class="vspinner"></div>
-            <span class="vbuffer-label">Memuat...</span>
-          </div>
-          <div class="vwatermark" id="wm-4"><span>PRATINJAU</span></div>
-        </div>
-        <div class="vinfo">
-          <div class="vinfo-top">
-            <div>
-              <p class="vinfo-num">Video 04</p>
-              <h3 class="vinfo-title">AI Shoe Reviewer</h3>
-            </div>
-            <span class="vinfo-badge">Creator Content</span>
-          </div>
-          <p class="vinfo-desc">Karakter AI realistis yang mereview sepatu — berlatar Lapangan Merdeka Medan yang sepenuhnya di-generate AI. Format talking-head seperti konten kreator sungguhan, tapi 100% dibuat tanpa kamera. Dikerjakan dari nol: generate karakter, build environment, edit di CapCut.</p>
-          <div class="vinfo-tags">
-            <span class="vtag">Creator Content</span>
-            <span class="vtag">Personal Branding</span>
-            <span class="vtag">AI Character</span>
-            <span class="vtag">Talking Head</span>
-          </div>
-          <div class="vspec">
-            <p class="vspec-label">Teknik yang dipakai</p>
-            <p class="vspec-text">AI character gen · environment gen · CapCut manual edit</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- SKILLS -->
     <div class="skills-section">
       <p class="section-eyebrow">Kemampuan</p>
@@ -1231,6 +1261,9 @@
       5: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/lv_0_20260603210454.mp4'
     };
 
+    // Track if video 4 has been expanded
+    let card4Expanded = false;
+
     function stopAll(except) {
       [1,2,3,4,5].forEach(id => {
         if (id !== except && videos[id]) {
@@ -1252,6 +1285,16 @@
       if (videos[id]) {
         videos[id].style.display = 'none';
         delete videos[id];
+      }
+      // Reset expand state for card 4
+      if (id === 4) {
+        card4Expanded = false;
+        const wrap = document.getElementById('player-4-wrap');
+        const player = document.getElementById('player-4');
+        const hint = document.getElementById('expand-hint-4');
+        wrap.classList.remove('expanded');
+        player.classList.remove('portrait-mode');
+        if (hint) hint.style.opacity = '1';
       }
     }
 
@@ -1310,6 +1353,34 @@
 
       player.addEventListener('click', (e) => {
         e.preventDefault();
+
+        if (id === 4) {
+          // First click on video 4: expand to portrait and start video
+          if (!card4Expanded) {
+            card4Expanded = true;
+            const wrap = document.getElementById('player-4-wrap');
+            const hint = document.getElementById('expand-hint-4');
+            // Switch aspect ratio
+            player.classList.add('portrait-mode');
+            wrap.classList.add('expanded');
+            if (hint) hint.style.opacity = '0';
+            // Start video
+            initVideo(4);
+            return;
+          }
+          // Subsequent clicks: play/pause
+          if (!videos[id]) {
+            initVideo(id);
+          } else {
+            if (videos[id].paused) {
+              videos[id].play();
+            } else {
+              videos[id].pause();
+            }
+          }
+          return;
+        }
+
         if (!videos[id]) {
           initVideo(id);
         } else {
