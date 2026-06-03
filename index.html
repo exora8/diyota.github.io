@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diyota — Video Editor Portfolio</title>
+  <title>Diyota — Portofolio Video Editor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -486,7 +486,7 @@
     .vmute-btn:hover { border-color: rgba(201,168,76,0.4); }
     .vmute-btn i { width: 13px; height: 13px; color: var(--gold); }
 
-    /* Pause overlay — shown only when paused mid-play */
+    /* Pause overlay */
     .vpause-overlay {
       position: absolute;
       inset: 0;
@@ -658,6 +658,31 @@
       line-height: 1.6;
     }
 
+    /* ── PORTRAIT CARD ── */
+    .vcard--portrait .vplayer {
+      aspect-ratio: 9/16;
+      max-height: 520px;
+    }
+
+    .portrait-row {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .portrait-row .vcard {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    @media (max-width: 900px) {
+      .portrait-row { padding: 0 24px 60px; }
+      .portrait-row .vcard { max-width: 100%; }
+      .vcard--portrait .vplayer { max-height: none; }
+    }
+
     /* ── SKILLS ── */
     .skills-section {
       border-top: 1px solid var(--border);
@@ -764,26 +789,26 @@
 
     <div class="splash-rec">
       <div class="dot-ping"></div>
-      <span>REC // PRESENT RECORD</span>
+      <span>REC // REKAMAN AKTIF</span>
     </div>
 
     <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:0;">
-      <p class="splash-eyebrow">Chasing Light & Cinematic Depth</p>
+      <p class="splash-eyebrow">Video Editor · Short-Form · AI Workflow</p>
       <div class="splash-divider"></div>
       <h1 class="splash-name">DIYOTA<span>.</span></h1>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap:14px; position:relative;">
       <button class="splash-btn" id="enterBtn">
-        Enter Experience
+        Masuk ke Portofolio
         <i data-lucide="arrow-right"></i>
       </button>
-      <p style="font-family:monospace; font-size:9px; letter-spacing:0.22em; color:#333; text-transform:uppercase;">Sound Enabled · Cinematic Showcase</p>
+      <p style="font-family:monospace; font-size:9px; letter-spacing:0.22em; color:#333; text-transform:uppercase;">Portofolio Video Editor · 2026</p>
     </div>
 
     <div class="splash-meta">
       <span>© 2026 DIYOTA</span>
-      <span>SYSTEM VERSION V2.0</span>
+      <span>VERSI SISTEM V2.0</span>
     </div>
   </div>
 
@@ -795,11 +820,11 @@
       <div style="display:flex; align-items:center;">
         <span class="nav-brand">DIYOTA<span>.</span></span>
         <div class="nav-divider"></div>
-        <span class="nav-label">Director Portfolio</span>
+        <span class="nav-label">Portofolio Video Editor</span>
       </div>
       <div class="nav-badge">
         <div class="dot-online"></div>
-        ONLINE FEED
+        TERBUKA UNTUK KERJA
       </div>
     </nav>
 
@@ -807,21 +832,21 @@
     <section class="hero">
       <div class="hero-pill">
         <i data-lucide="film"></i>
-        Curated Creative Showreel
+        Showreel · Short-Form Content
       </div>
-      <h2 class="hero-title">COMMERCIAL CUTS</h2>
+      <h2 class="hero-title">HAI, SAYA DIYOTA</h2>
       <div class="hero-divider"></div>
       <p class="hero-desc">
-        Welcome to my portfolio.<br><br>
-        Here are <strong>3 sample videos</strong> crafted based on your company's requirements — product ads, automotive content, and lifestyle brand ads. All footage is <strong>AI-enhanced</strong>, edited manually with full attention to every cut, transition, and color grade.
+        Saya seorang video editor yang fokus di konten short-form — TikTok, Reels, dan Shorts.<br><br>
+        Di bawah ini ada <strong>4 video</strong> yang saya buat khusus sebagai referensi kerja. Setiap video punya gaya berbeda: otomotif, lifestyle, produk, dan creator content. Semua dikerjakan sendiri — dari konsep, generate AI, sampai editing final di CapCut.
       </p>
     </section>
 
     <!-- SECTION LABEL -->
     <div class="section-header">
-      <p class="section-eyebrow">Selected Work</p>
-      <h3 class="section-title">TOP 3 SAMPLES</h3>
-      <p class="section-sub">Each video demonstrates a different content style relevant to your needs</p>
+      <p class="section-eyebrow">Karya Pilihan</p>
+      <h3 class="section-title">VIDEO PORTOFOLIO</h3>
+      <p class="section-sub">Klik video untuk memutar langsung di sini</p>
     </div>
 
     <!-- VIDEO GRID -->
@@ -838,7 +863,7 @@
             <div class="vplay-btn">
               <i data-lucide="play"></i>
             </div>
-            <span class="vplay-label">Click to preview</span>
+            <span class="vplay-label">Klik untuk pratinjau</span>
           </div>
 
           <div class="vpause-overlay" id="pause-1" style="display:none;">
@@ -854,8 +879,8 @@
 
           <div class="vprogress-wrap" id="prog-wrap-1" style="display:none;">
             <div class="vprogress-times">
-              <span id="cur-1">0.0s</span>
-              <span id="dur-1">12.0s</span>
+              <span id="cur-1">0.0d</span>
+              <span id="dur-1">12.0d</span>
             </div>
             <div class="vprogress-bar">
               <div class="vprogress-fill" id="prog-fill-1" style="width:0%"></div>
@@ -864,28 +889,28 @@
 
           <div class="vbuffer" id="buf-1" style="display:none;">
             <div class="vspinner"></div>
-            <span class="vbuffer-label">Buffering...</span>
+            <span class="vbuffer-label">Memuat...</span>
           </div>
-          <div class="vwatermark" id="wm-1"><span>PREVIEW</span></div>
+          <div class="vwatermark" id="wm-1"><span>PRATINJAU</span></div>
         </div>
         <div class="vinfo">
           <div class="vinfo-top">
             <div>
-              <p class="vinfo-num">Sample 01</p>
+              <p class="vinfo-num">Video 01</p>
               <h3 class="vinfo-title">Fortuner × Turbo Garrett GTX</h3>
             </div>
-            <span class="vinfo-badge">Product Ad</span>
+            <span class="vinfo-badge">Otomotif</span>
           </div>
-          <p class="vinfo-desc">Automotive product marketing video featuring the Toyota Fortuner with Garrett GTX3582R turbo modification. Edited in the style of viral TikTok automotive content. Real footage color graded manually in CapCut, AI used for visual enhancement.</p>
+          <p class="vinfo-desc">Iklan otomotif bergaya TikTok untuk Toyota Fortuner dengan modifikasi turbo Garrett GTX3582R. Foto produk di-enhance pakai AI, lalu diedit manual di CapCut — speed ramp, sinkronisasi musik, dan color grade gelap dramatis.</p>
           <div class="vinfo-tags">
-            <span class="vtag">Product Ad</span>
-            <span class="vtag">Automotive</span>
-            <span class="vtag">TikTok Style</span>
+            <span class="vtag">Otomotif</span>
+            <span class="vtag">Iklan Produk</span>
+            <span class="vtag">Gaya TikTok</span>
             <span class="vtag">Color Grading</span>
           </div>
           <div class="vspec">
-            <p class="vspec-label">Specifications</p>
-            <p class="vspec-text">Speed ramp · bass sync · 4K upscale · dynamic shutter effect</p>
+            <p class="vspec-label">Teknik yang dipakai</p>
+            <p class="vspec-text">Speed ramp · sinkronisasi beat · upscale 4K · dynamic shutter</p>
           </div>
         </div>
       </div>
@@ -901,7 +926,7 @@
             <div class="vplay-btn">
               <i data-lucide="play"></i>
             </div>
-            <span class="vplay-label">Click to preview</span>
+            <span class="vplay-label">Klik untuk pratinjau</span>
           </div>
 
           <div class="vpause-overlay" id="pause-2" style="display:none;">
@@ -917,8 +942,8 @@
 
           <div class="vprogress-wrap" id="prog-wrap-2" style="display:none;">
             <div class="vprogress-times">
-              <span id="cur-2">0.0s</span>
-              <span id="dur-2">12.0s</span>
+              <span id="cur-2">0.0d</span>
+              <span id="dur-2">12.0d</span>
             </div>
             <div class="vprogress-bar">
               <div class="vprogress-fill" id="prog-fill-2" style="width:0%"></div>
@@ -927,28 +952,28 @@
 
           <div class="vbuffer" id="buf-2" style="display:none;">
             <div class="vspinner"></div>
-            <span class="vbuffer-label">Buffering...</span>
+            <span class="vbuffer-label">Memuat...</span>
           </div>
-          <div class="vwatermark" id="wm-2"><span>PREVIEW</span></div>
+          <div class="vwatermark" id="wm-2"><span>PRATINJAU</span></div>
         </div>
         <div class="vinfo">
           <div class="vinfo-top">
             <div>
-              <p class="vinfo-num">Sample 02</p>
+              <p class="vinfo-num">Video 02</p>
               <h3 class="vinfo-title">Kahf Silverwood × Yamaha R1M</h3>
             </div>
-            <span class="vinfo-badge">Lifestyle Ad</span>
+            <span class="vinfo-badge">Lifestyle</span>
           </div>
-          <p class="vinfo-desc">Lifestyle product ad for Kahf Silverwood fragrance, featuring a custom Yamaha R1M in gold/black livery. Multi-angle cinematic shots — FPV showroom walkthrough, parfum reveal, and night ride sequence. AI-generated footage, manually edited.</p>
+          <p class="vinfo-desc">Iklan lifestyle untuk parfum Kahf Silverwood — dipadukan dengan Yamaha R1M livery emas/hitam. Footage AI-generated, multi-angle: FPV showroom, reveal produk, dan berkendara malam. Gaya visual premium, cocok untuk brand menengah ke atas.</p>
           <div class="vinfo-tags">
-            <span class="vtag">Lifestyle Ad</span>
-            <span class="vtag">Fragrance</span>
-            <span class="vtag">Cinematic</span>
-            <span class="vtag">Night Shoot</span>
+            <span class="vtag">Lifestyle</span>
+            <span class="vtag">Parfum</span>
+            <span class="vtag">Sinematik</span>
+            <span class="vtag">Malam</span>
           </div>
           <div class="vspec">
-            <p class="vspec-label">Specifications</p>
-            <p class="vspec-text">Gold & charcoal grading · ambient sound design · depth blur</p>
+            <p class="vspec-label">Teknik yang dipakai</p>
+            <p class="vspec-text">Color grade emas & gelap · ambient sound · depth blur</p>
           </div>
         </div>
       </div>
@@ -964,7 +989,7 @@
             <div class="vplay-btn">
               <i data-lucide="play"></i>
             </div>
-            <span class="vplay-label">Click to preview</span>
+            <span class="vplay-label">Klik untuk pratinjau</span>
           </div>
 
           <div class="vpause-overlay" id="pause-3" style="display:none;">
@@ -980,8 +1005,8 @@
 
           <div class="vprogress-wrap" id="prog-wrap-3" style="display:none;">
             <div class="vprogress-times">
-              <span id="cur-3">0.0s</span>
-              <span id="dur-3">12.0s</span>
+              <span id="cur-3">0.0d</span>
+              <span id="dur-3">12.0d</span>
             </div>
             <div class="vprogress-bar">
               <div class="vprogress-fill" id="prog-fill-3" style="width:0%"></div>
@@ -990,45 +1015,110 @@
 
           <div class="vbuffer" id="buf-3" style="display:none;">
             <div class="vspinner"></div>
-            <span class="vbuffer-label">Buffering...</span>
+            <span class="vbuffer-label">Memuat...</span>
           </div>
-          <div class="vwatermark" id="wm-3"><span>PREVIEW</span></div>
+          <div class="vwatermark" id="wm-3"><span>PRATINJAU</span></div>
         </div>
         <div class="vinfo">
           <div class="vinfo-top">
             <div>
-              <p class="vinfo-num">Sample 03</p>
-              <h3 class="vinfo-title">Specs — Football & Novarspeed</h3>
+              <p class="vinfo-num">Video 03</p>
+              <h3 class="vinfo-title">Specs — Sepatu Bola & Novarspeed</h3>
             </div>
-            <span class="vinfo-badge">Consumer Product</span>
+            <span class="vinfo-badge">Produk</span>
           </div>
-          <p class="vinfo-desc">Product ad for Specs Indonesia — featuring the football cleat and Novarspeed running shoe. Slow motion cinematic shots, action sequences, and clean product presentation. Demonstrates versatility beyond automotive content.</p>
+          <p class="vinfo-desc">Iklan produk untuk Specs Indonesia — dua sepatu, dua gaya. Sepatu bola dengan energi lapangan, Novarspeed dengan feel lari dinamis. Bukti bahwa saya bisa keluar dari zona otomotif dan tetap deliver hasil yang kuat.</p>
           <div class="vinfo-tags">
-            <span class="vtag">Consumer Product</span>
-            <span class="vtag">Sports</span>
+            <span class="vtag">Produk</span>
+            <span class="vtag">Olahraga</span>
             <span class="vtag">Slow Motion</span>
-            <span class="vtag">Brand Ad</span>
+            <span class="vtag">Iklan Brand</span>
           </div>
           <div class="vspec">
-            <p class="vspec-label">Specifications</p>
-            <p class="vspec-text">Dynamic tracking shots · motion overlays · slow-mo enhancement</p>
+            <p class="vspec-label">Teknik yang dipakai</p>
+            <p class="vspec-text">Tracking shot · motion overlay · slow-mo enhancement</p>
           </div>
         </div>
       </div>
 
     </div>
 
+    <!-- VIDEO 4 — PORTRAIT ROW -->
+    <div class="portrait-row">
+      <div class="vcard vcard--portrait" id="card-4">
+        <div class="vplayer" id="player-4">
+          <div class="vplayer-stripe"></div>
+          <img id="thumb-4" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=70" alt="AI Shoe Reviewer">
+          <div class="vplayer-vignette"></div>
+
+          <div class="vplay-btn-wrap" id="playbtn-4">
+            <div class="vplay-btn">
+              <i data-lucide="play"></i>
+            </div>
+            <span class="vplay-label">Klik untuk pratinjau</span>
+          </div>
+
+          <div class="vpause-overlay" id="pause-4" style="display:none;">
+            <div class="vpause-icon">
+              <div class="vpause-bar"></div>
+              <div class="vpause-bar"></div>
+            </div>
+          </div>
+
+          <div class="vmute-btn" id="mute-4" style="display:none;">
+            <i data-lucide="volume-2" id="mute-icon-4"></i>
+          </div>
+
+          <div class="vprogress-wrap" id="prog-wrap-4" style="display:none;">
+            <div class="vprogress-times">
+              <span id="cur-4">0.0d</span>
+              <span id="dur-4">0.0d</span>
+            </div>
+            <div class="vprogress-bar">
+              <div class="vprogress-fill" id="prog-fill-4" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="vbuffer" id="buf-4" style="display:none;">
+            <div class="vspinner"></div>
+            <span class="vbuffer-label">Memuat...</span>
+          </div>
+          <div class="vwatermark" id="wm-4"><span>PRATINJAU</span></div>
+        </div>
+        <div class="vinfo">
+          <div class="vinfo-top">
+            <div>
+              <p class="vinfo-num">Video 04</p>
+              <h3 class="vinfo-title">AI Shoe Reviewer</h3>
+            </div>
+            <span class="vinfo-badge">Creator Content</span>
+          </div>
+          <p class="vinfo-desc">Karakter AI realistis yang mereview sepatu — berlatar Lapangan Merdeka Medan yang sepenuhnya di-generate AI. Format talking-head seperti konten kreator sungguhan, tapi 100% dibuat tanpa kamera. Dikerjakan dari nol: generate karakter, build environment, edit di CapCut.</p>
+          <div class="vinfo-tags">
+            <span class="vtag">Creator Content</span>
+            <span class="vtag">Personal Branding</span>
+            <span class="vtag">AI Character</span>
+            <span class="vtag">Talking Head</span>
+          </div>
+          <div class="vspec">
+            <p class="vspec-label">Teknik yang dipakai</p>
+            <p class="vspec-text">AI character gen · environment gen · CapCut manual edit</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SKILLS -->
     <div class="skills-section">
-      <p class="section-eyebrow">Capabilities</p>
-      <h3 class="section-title">WHAT I BRING</h3>
+      <p class="section-eyebrow">Kemampuan</p>
+      <h3 class="section-title">APA YANG BISA SAYA KERJAKAN</h3>
       <div class="skills-grid">
-        <div class="skill-card"><p class="skill-name">CapCut</p><p class="skill-sub">Primary editing tool</p></div>
-        <div class="skill-card"><p class="skill-name">AI Video Generation</p><p class="skill-sub">Dola, Kling AI</p></div>
-        <div class="skill-card"><p class="skill-name">Color Grading</p><p class="skill-sub">Manual, cinematic style</p></div>
-        <div class="skill-card"><p class="skill-name">AI Image Enhancement</p><p class="skill-sub">ChatGPT, Midjourney</p></div>
-        <div class="skill-card"><p class="skill-name">Hook & Transition</p><p class="skill-sub">TikTok & Reels format</p></div>
-        <div class="skill-card"><p class="skill-name">Fast Turnaround</p><p class="skill-sub">Deadline oriented</p></div>
+        <div class="skill-card"><p class="skill-name">CapCut</p><p class="skill-sub">Editing utama — cut, transisi, efek</p></div>
+        <div class="skill-card"><p class="skill-name">Generate Video AI</p><p class="skill-sub">Kling AI, Dola, Seedance</p></div>
+        <div class="skill-card"><p class="skill-name">Color Grading</p><p class="skill-sub">Manual, gaya sinematik gelap</p></div>
+        <div class="skill-card"><p class="skill-name">Generate Gambar AI</p><p class="skill-sub">DALL·E, Midjourney</p></div>
+        <div class="skill-card"><p class="skill-name">Hook & Retensi</p><p class="skill-sub">Struktur video TikTok & Reels</p></div>
+        <div class="skill-card"><p class="skill-name">Deadline-Oriented</p><p class="skill-sub">Terbiasa kerja cepat & mandiri</p></div>
       </div>
     </div>
 
@@ -1037,9 +1127,9 @@
       <div class="footer-inner">
         <div class="footer-left">
           <div class="footer-dot"></div>
-          Cinematic Showcase · Web
+          Portofolio · Video Editor
         </div>
-        <span class="footer-right">© 2026 DIYOTA. ALL RIGHTS RESERVED.</span>
+        <span class="footer-right">© 2026 DIYOTA. SEMUA HAK DILINDUNGI.</span>
       </div>
     </footer>
 
@@ -1066,11 +1156,12 @@
     const sources = {
       1: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/Garrett-Fortuner.mp4',
       2: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/kahf-R1M.mp4',
-      3: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/specs-12.mp4'
+      3: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/specs-12.mp4',
+      4: 'https://github.com/exora8/diyota.github.io/raw/refs/heads/main/sport-shoes-review.mp4'
     };
 
     function stopAll(except) {
-      [1,2,3].forEach(id => {
+      [1,2,3,4].forEach(id => {
         if (id !== except && videos[id]) {
           videos[id].pause();
           videos[id].currentTime = 0;
@@ -1125,13 +1216,13 @@
       });
 
       vid.addEventListener('loadedmetadata', () => {
-        document.getElementById('dur-' + id).textContent = vid.duration.toFixed(1) + 's';
+        document.getElementById('dur-' + id).textContent = vid.duration.toFixed(1) + 'd';
       });
 
       vid.addEventListener('timeupdate', () => {
         const pct = (vid.currentTime / vid.duration) * 100 || 0;
         document.getElementById('prog-fill-' + id).style.width = pct.toFixed(1) + '%';
-        document.getElementById('cur-' + id).textContent = vid.currentTime.toFixed(1) + 's';
+        document.getElementById('cur-' + id).textContent = vid.currentTime.toFixed(1) + 'd';
       });
 
       document.getElementById('player-' + id).appendChild(vid);
@@ -1143,7 +1234,7 @@
       document.getElementById('prog-wrap-' + id).style.display = 'block';
     }
 
-    [1,2,3].forEach(id => {
+    [1,2,3,4].forEach(id => {
       const player = document.getElementById('player-' + id);
 
       player.addEventListener('click', (e) => {
@@ -1163,7 +1254,7 @@
         e.stopPropagation();
         e.preventDefault();
         globalMuted = !globalMuted;
-        [1,2,3].forEach(vid => {
+        [1,2,3,4].forEach(vid => {
           if (videos[vid]) videos[vid].muted = globalMuted;
         });
         const icon = document.getElementById('mute-icon-' + id);
