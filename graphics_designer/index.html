@@ -512,6 +512,7 @@ const carEl=document.getElementById('car');
 let sx=0,sy=0,drag=false,moved=false;
 
 carEl.addEventListener('pointerdown',e=>{
+  if(e.target.closest('.car-btn,.car-dots')){return;}
   sx=e.clientX;sy=e.clientY;drag=true;moved=false;
   carEl.setPointerCapture(e.pointerId);
   e.preventDefault();
